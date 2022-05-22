@@ -1,43 +1,34 @@
 //
 // Created by Eddie Rudoy on 09/05/2022.
 //
-
-#ifndef AIRPORTPROJECT_LUGGAGE_H
-#define AIRPORTPROJECT_LUGGAGE_H
-
+#pragma once
 #include <iostream>
-
-using namespace std;
 
 class Luggage
 {
-private:
-    int id;
-    double weight;
+    int Id;
+    double Weight;
 
 public:
     Luggage(int id, double weight);
 
-    Luggage(const Luggage& other);
+    Luggage(const Luggage& other) = default;
 
-    Luggage(Luggage&& other);
+    Luggage(Luggage&& other) noexcept = default;
 
-    ~Luggage();
+    ~Luggage() = default;
 
-    const Luggage& operator=(const Luggage& other);
+    Luggage& operator=(const Luggage& other) = default;
 
-    const Luggage& operator=(Luggage&& other);
+    Luggage& operator=(Luggage&& other) = default;
 
-    int getId();
+    int GetId() const;
 
-    void setId(int id);
+    void SetId(int id);
 
-    double getWeight();
+    double GetWeight() const;
 
-    void setWeight(double weight);
+    void SetWeight(double weight);
 
-    friend ostream& operator<<(ostream& os, const Luggage& luggage);
+    friend std::ostream& operator<<(std::ostream& os, const Luggage& luggage);
 };
-
-
-#endif //AIRPORTPROJECT_LUGGAGE_H

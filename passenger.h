@@ -2,8 +2,7 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_PASSENGER_H
-#define AIRPORTPROJECT_PASSENGER_H
+#pragma once
 
 #include "person.h"
 #include "luggage.h"
@@ -11,35 +10,32 @@
 class Passenger : virtual public Person
 {
 protected:
-    int flightNumber;
-    Luggage* luggage;
+    int FlightNumber;
+    Luggage* PassengerLuggage;
 
 public:
-    Passenger(const Person& base, int flightNumber, const Luggage& luggage);
+    Passenger(const Person& base, int flightNumber, Luggage& luggage);
 
     Passenger(Person&& base, int flightNumber, Luggage& luggage);
 
-    Passenger(const Passenger& other);
+    Passenger(const Passenger& other) = default;
 
-    Passenger(Passenger&& other);
+    Passenger(Passenger&& other) noexcept = default;
 
-    ~Passenger();
+    ~Passenger() = default;
 
-    const Passenger& operator=(const Passenger& other);
+    Passenger& operator=(const Passenger& other) = default;
 
-    const Passenger& operator=(Passenger&& other);
+    Passenger& operator=(Passenger&& other) noexcept = default;
 
-    void setFlightNumber(int flightNumber);
+    void SetFlightNumber(int flightNumber);
 
-    void setLuggage(const Luggage& luggage);
+    void SetLuggage(Luggage& luggage);
 
-    int getFlightNumber();
+    int GetFlightNumber() const;
 
-    const Luggage& getLuggage();
+    const Luggage& GetLuggage() const;
 
-    friend ostream& operator<<(ostream& os, const Passenger& passenger);
+    friend std::ostream& operator<<(std::ostream& os, const Passenger& passenger);
 
 };
-
-
-#endif //AIRPORTPROJECT_PASSENGER_H

@@ -2,58 +2,52 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_PERSON_H
-#define AIRPORTPROJECT_PERSON_H
+#pragma once
 
 #include <iostream>
 #include "date.h"
 
-using namespace std;
-
 class Person
 {
 protected:
-    static int counter;
+    static int Counter;
 
-    char* firstName;
-    char* lastName;
-    int id;
-    Date birthDate;
+    char* FirstName;
+    char* LastName;
+    int Id;
+    Date BirthDate;
 
 public:
-    Person(const char* firstName, const char* lastName, Date birthDate);
+    Person(char* firstName, char* lastName, Date birthDate);
 
-    Person(const Person& other);
+    Person(const Person& other) = default;
 
-    Person(Person&& other);
+    Person(Person&& other) noexcept = default;
 
-    ~Person();
+    ~Person() = default;
 
-    const Person& operator=(const Person& other);
+    Person& operator=(const Person& other) = default;
 
-    const Person& operator=(Person&& other);
+    Person& operator=(Person&& other) noexcept = default;
 
-    void setFirstName(const char* firstName);
+    void SetFirstName(char* firstName);
 
-    void setLastName(const char* lastName);
+    void SetLastName(char* lastName);
 
-    void setId(int id);
+    void SetId(int id);
 
-    void setBirthDate(int day, int month, int year);
+    void SetBirthDate(int day, int month, int year);
 
-    const char* getFirstName();
+    const char* GetFirstName() const;
 
-    const char* getLastName();
+    const char* GetLastName() const;
 
-    const char* getFullName();
+    const char* GetFullName() const;
 
-    int getId();
+    int GetId() const;
 
-    Date getBirthDate();
+    Date GetBirthDate() const;
 
-    friend ostream& operator<<(ostream& os, const Person& person);
+    friend std::ostream& operator<<(std::ostream& os, const Person& person);
 
 };
-
-
-#endif //AIRPORTPROJECT_PERSON_H

@@ -2,8 +2,7 @@
 // Created by Simon Bruno on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECTCPP_EMPLOYEE_H
-#define AIRPORTPROJECTCPP_EMPLOYEE_H
+#pragma once
 
 #include "person.h"
 #include "date.h"
@@ -11,10 +10,10 @@
 class Employee : virtual public Person
 {
 protected:
-    int employeeId;
-    double salary;
-    Date startDate;
-    bool isAvailable;
+    int EmployeeId;
+    double Salary;
+    Date StartDate;
+    bool IsAvailable;
 
 public:
     Employee(const Person& base, double salary, Date startDate, bool isAvailable = false);
@@ -23,28 +22,26 @@ public:
 
     Employee(const Employee& other);
 
-    Employee(Employee&& other);
+    Employee(Employee&& other) noexcept;
 
     ~Employee();
 
-    void setSalary(double salary);
+    void SetSalary(double salary);
 
-    void setAvailability(bool availability);
+    void SetAvailability(bool availability);
 
-    int getEmployeeId();
+    int GetEmployeeId();
 
-    double getSalary();
+    double GetSalary();
 
-    Date getStartDate();
+    Date GetStartDate();
 
-    bool getAvailability();
+    bool GetAvailability();
 
-    const Employee& operator=(const Employee& other);
+    Employee& operator=(const Employee& other);
 
-    const Employee& operator=(Employee&& other);
+    Employee& operator=(Employee&& other) noexcept;
 
     friend ostream& operator<<(ostream& os, const Employee& employee);
 
 };
-
-#endif //AIRPORTPROJECTCPP_EMPLOYEE_H

@@ -36,7 +36,12 @@
     <ClInclude Include="plane.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="date.cpp" />
+    <ClCompile Include="employee.cpp" />
+    <ClCompile Include="luggage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="passenger.cpp" />
+    <ClCompile Include="person.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

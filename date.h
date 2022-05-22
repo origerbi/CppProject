@@ -2,40 +2,31 @@
 // Created by Eddie Rudoy on 10/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_DATE_H
-#define AIRPORTPROJECT_DATE_H
-
+#pragma once
 #include <iostream>
-
-using namespace std;
 
 class Date
 {
-private:
     static constexpr int DAY_MONTH[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    int day;
-    int month;
-    int year;
+    int Day;
+    int Month;
+    int Year;
 
 public:
     Date(int day, int month, int year);
 
-    Date(const Date& other);
+    Date(const Date& other) = default;
 
-    Date(Date&& other);
+    Date(Date&& other) noexcept = default;
 
-    ~Date();
+    ~Date() = default;
 
-    const Date& operator=(const Date& other);
+    Date& operator=(const Date& other) = default;
 
-    const Date& operator=(Date&& other);
+    Date& operator=(Date&& other) noexcept = default;
 
-    const char* getDate(const Date& date); // return string format of date (e.g dd/mm/yyyy)
+    static const char* GetDate(const Date& date); // return string format of date (e.g dd/mm/yyyy)
 
 
-    friend ostream& operator<<(ostream& os, const Date& date);
+    friend std::ostream& operator<<(std::ostream& os, const Date& date);
 };
-
-
-#endif //AIRPORTPROJECT_DATE_H
