@@ -14,4 +14,56 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="airCrew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="airline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="airport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="airportManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="employee.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flightAttendant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="groudCrew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="groundAttendant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luggage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="passenger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="person.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pilot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

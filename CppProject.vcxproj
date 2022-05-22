@@ -18,6 +18,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="airCrew.h" />
+    <ClInclude Include="airline.h" />
+    <ClInclude Include="airport.h" />
+    <ClInclude Include="airportManager.h" />
+    <ClInclude Include="date.h" />
+    <ClInclude Include="employee.h" />
+    <ClInclude Include="flight.h" />
+    <ClInclude Include="flightAttendant.h" />
+    <ClInclude Include="groudCrew.h" />
+    <ClInclude Include="groundAttendant.h" />
+    <ClInclude Include="luggage.h" />
+    <ClInclude Include="passenger.h" />
+    <ClInclude Include="person.h" />
+    <ClInclude Include="pilot.h" />
+    <ClInclude Include="plane.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
