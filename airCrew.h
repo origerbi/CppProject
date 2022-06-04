@@ -2,34 +2,29 @@
 // Created by Simon Bruno on 10/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_AIRCREW_H
-#define AIRPORTPROJECT_AIRCREW_H
+#pragma once
 
 #include <iostream>
-
-using namespace std;
 
 class AirCrew
 {
 protected:
-    int airlineId;
+    int AirlineId;
 
 public:
-    AirCrew(int airlineId);
+    explicit AirCrew(int airlineId);
 
-    AirCrew(const AirCrew& other);
+    AirCrew(const AirCrew& other) = default;
 
-    AirCrew(AirCrew&& other);
+    AirCrew(AirCrew&& other) noexcept = default;
 
-    ~AirCrew();
+    ~AirCrew() = default;
 
-    const AirCrew& operator=(const AirCrew& other);
+    AirCrew& operator=(const AirCrew& other) = default;
 
-    const AirCrew& operator=(AirCrew&& other);
+    AirCrew& operator=(AirCrew&& other) noexcept = default;
 
-    int getAirlineId();
+    int GetAirlineId() const;
 
-    friend ostream& operator<<(ostream& os, const AirCrew& airCrew);
+    friend std::ostream& operator<<(std::ostream& os, const AirCrew& airCrew);
 };
-
-#endif //AIRPORTPROJECT_AIRCREW_H

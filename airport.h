@@ -2,66 +2,62 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_AIRPORT_H
-#define AIRPORTPROJECT_AIRPORT_H
+// ReSharper disable CppClangTidyModernizeAvoidCArrays
+#pragma once
 
-#include <iostream>
 #include "flight.h"
-#include "airline.h"
-#include "groudCrew.h"
-
-using namespace std;
+#include "groundCrew.h"
+#include <iostream>
 
 class Airport
 {
-private:
     static constexpr int MAX_FLIGHTS = 10;
     static constexpr int MAX_CREW = 10;
 
-    char* iata; // IATA- 3 letter airport code (eg. London Heathrow- LHR)
-    char* name;
-    char* city;
-    Flight* flights[MAX_FLIGHTS];
-    GroundCrew* groundCrew[MAX_CREW];
-    int numOfFlights;
-    int numOfCrew;
+    char Iata[4]{}; // IATA- 3 letter airport code (eg. London Heathrow- LHR)
+    char Name[50]{};
+    char City[50]{};
+    Flight* Flights[MAX_FLIGHTS]{};
+    GroundCrew* GroundCrews[MAX_CREW]{};
+    int NumOfFlights{};
+    int NumOfCrew{};
 
 public:
-    Airport(char* iata, char* name, char* city);
+    Airport(const char* iata, const char* name, const char* city);
 
-    Airport(const Airport& other);
+    Airport(const Airport& other) = default;
 
-    Airport(Airport&& other);
+    Airport(Airport&& other) = default;
 
     ~Airport();
 
-    const Airport& operator=(const Airport& other);
+    Airport& operator=(const Airport& other) = default;
 
-    const Airport& operator=(Airport&& other);
+    Airport& operator=(Airport&& other) = default;
 
-    char* getIata() const;
+    char* GetIata();
 
-    void setIata(char* iata);
+    void SetIata(const char* iata);
 
-    char* getCity() const;
+    char* GetCity();
 
-    void setCity(char* city);
+    void SetCity(const char* city);
 
-    char* getName() const;
+    char* GetName();
 
-    void setName(char* name);
+    void SetName(const char* name);
 
-    Flight* const* getFlights();
+    Flight* const* GetFlights();
 
-    GroundCrew* const* getGroundCrew() const;
+    GroundCrew* const* GetGroundCrew() const;
 
-    int getNumOfFlights() const;
+    int GetNumOfFlights() const;
 
-    int getNumOfCrew() const;
+    int GetNumOfCrew() const;
 
-    bool operator==(const Airport& airport);
+    bool operator==(const Airport& airport) const;
 
-    friend ostream& operator<<(ostream& os, const Airport& airport);
+    friend std::ostream& operator<<(std::ostream& os, const Airport& airport);
+    Airport& operator+=(const Flight& flight);
+    Airport& operator+=(const GroundCrew& crew);
 };
-
-#endif //AIRPORTPROJECT_AIRPORT_H

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "person.h"
 #include "date.h"
+#include "person.h"
 
 class Employee : virtual public Person
 {
@@ -22,26 +22,26 @@ public:
 
     Employee(const Employee& other);
 
-    Employee(Employee&& other) noexcept;
+    Employee(Employee&& other) noexcept = default;
 
-    ~Employee();
+    ~Employee() = default;
 
     void SetSalary(double salary);
 
     void SetAvailability(bool availability);
 
-    int GetEmployeeId();
+    int GetEmployeeId() const;
 
-    double GetSalary();
+    double GetSalary() const;
 
-    Date GetStartDate();
+    Date GetStartDate() const;
 
-    bool GetAvailability();
+    bool GetAvailability() const;
 
-    Employee& operator=(const Employee& other);
+    Employee& operator=(const Employee& other) = default;
 
-    Employee& operator=(Employee&& other) noexcept;
+    Employee& operator=(Employee&& other) noexcept = default;
 
-    friend ostream& operator<<(ostream& os, const Employee& employee);
+    friend std::ostream& operator<<(std::ostream& os, const Employee& employee);
 
 };

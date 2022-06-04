@@ -2,76 +2,68 @@
 // Created by Eddie Rudoy on 10/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_AIRPORTMANAGER_H
-#define AIRPORTPROJECT_AIRPORTMANAGER_H
+// ReSharper disable CppClangTidyModernizeAvoidCArrays
+#pragma once
 
-#include <iostream>
 #include "airline.h"
 #include "airport.h"
-#include "employee.h"
-#include "airCrew.h"
-#include "groudCrew.h"
+#include "flightAttendant.h"
 #include "groundAttendant.h"
 #include "pilot.h"
-#include "flightAttendant.h"
+#include <iostream>
 
 class AirportManager
 {
-private:
     static constexpr int MAX_AIRPORTS = 5;
     static constexpr int MAX_AIRLINES = 10;
 
-    Airport* airports[MAX_AIRPORTS];
-    Airline* airlines[MAX_AIRLINES];
+    Airport* Airports[MAX_AIRPORTS];
+    Airline* Airlines[MAX_AIRLINES];
 
-    int numOfAirports;
-    int numOfAirlines;
+    int NumOfAirports;
+    int NumOfAirlines;
 
 public:
-    AirportManager();
+    AirportManager() = default;
 
-    AirportManager(const AirportManager& other);
+    AirportManager(const AirportManager& other) = default;
 
-    AirportManager(AirportManager&& other);
+    AirportManager(AirportManager&& other) = default;
+
+    AirportManager& operator=(const AirportManager& other) = default;
+
+    AirportManager& operator=(AirportManager&& other) = default;
 
     ~AirportManager();
 
-    Airport* const* getAirports() const;
+    Airport* const* GetAirports() const;
 
-    Airline* const* getAirlines() const;
+    Airline* const* GetAirlines() const;
 
-    int getNumOfAirports() const;
+    int GetNumOfAirports() const;
 
-    int getNumOfAirlines() const;
+    int GetNumOfAirlines() const;
 
     const AirportManager& operator+=(const Airport& airport); // add airport to airport manager
     const AirportManager& operator+=(const Airline& airline); // add airline to airport manager
 
-    Airport* findAirportByCode(char* code);
+    Airport* FindAirportByCode(const char* code) const;
 
-    Airline* findAirline(char* name);
+    Airline* FindAirline(const char* name) const;
 
-    void findFlights(char* src, char* dest);
+    void FindFlights(char* src, char* dest);
 
-    bool registerFlight(Airline& airline, const Flight& flight);
+    bool RegisterFlight(const Airline& airline, const Flight& flight);
 
-    bool addPassengerToFlight(Passenger& passenger, int flightNumber);
+    bool AddPassengerToFlight(const Passenger& passenger, int flightNumber) const;
 
-    bool addEmployeeToAirport(GroundAttendant& employee, char* code);
+    bool AddEmployeeToAirport(const GroundAttendant& employee, const char* code) const;
 
-    bool addPilotToAirline(Pilot& employee, int id);
+    bool AddPilotToAirline(const Pilot& employee, int id) const;
 
-    bool addFlightAttendantToAirline(FlightAttendant& employee, int id);
+    bool AddFlightAttendantToAirline(const FlightAttendant& employee, int id) const;
 
-    Flight& assembleCrew(int flightNumber);
+    Flight& AssembleCrew(int flightNumber);
 
-    friend ostream& operator<<(ostream& os, const AirportManager& airportManager);
-
-    friend ostream& operator<<(ostream& os, const Airport** airports);
-
-    friend ostream& operator<<(ostream& os, const Airline** airlines);
-
+    friend std::ostream& operator<<(std::ostream& os, const AirportManager& airportManager);
 };
-
-
-#endif //AIRPORTPROJECT_AIRPORTMANAGER_H

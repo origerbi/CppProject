@@ -2,43 +2,55 @@
 // Created by Simon Bruno on 10/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_FLIGHTATTENDANT_H
-#define AIRPORTPROJECT_FLIGHTATTENDANT_H
+#pragma once
 
-#include "employee.h"
 #include "airCrew.h"
+#include "employee.h"
 
 class FlightAttendant : public Employee, public AirCrew
 {
 public:
-    enum class eFlightAttendantRank
+    enum class EFlightAttendantRank
     {
-        PURSERS, STEWARDS
+        Pursers,
+        Stewards
     };
 
 private:
-    eFlightAttendantRank flightAttendantRank;
+    EFlightAttendantRank FlightAttendantRank;
 
 public:
-    FlightAttendant(const Employee& employee, const AirCrew& airCrew, eFlightAttendantRank flightAttendantRank);
+    FlightAttendant(const Employee& employee, const AirCrew& airCrew, EFlightAttendantRank flightAttendantRank);
 
-    FlightAttendant(Employee&& employee, AirCrew&& airCrew, eFlightAttendantRank flightAttendantRank);
+    FlightAttendant(Employee&& employee, AirCrew&& airCrew, EFlightAttendantRank flightAttendantRank);
 
-    FlightAttendant(const FlightAttendant& other);
+    FlightAttendant(const FlightAttendant& other) = default;
 
-    FlightAttendant(FlightAttendant&& other);
+    FlightAttendant(FlightAttendant&& other) noexcept = default;
 
-    ~FlightAttendant();
+    ~FlightAttendant() = default;
 
-    void setAttendantRank(eFlightAttendantRank flightAttendantRank);
+    void SetAttendantRank(EFlightAttendantRank flightAttendantRank);
 
-    eFlightAttendantRank getAttendantRank();
+    EFlightAttendantRank GetAttendantRank() const;
 
-    const FlightAttendant& operator=(const FlightAttendant& other);
+    FlightAttendant& operator=(const FlightAttendant& other) = default;
 
-    const FlightAttendant& operator=(FlightAttendant&& other);
+    FlightAttendant& operator=(FlightAttendant&& other) noexcept = default;
 
-    friend ostream& operator<<(ostream& os, const FlightAttendant& flightAttendant);
+    friend std::ostream& operator<<(std::ostream& os, const EFlightAttendantRank& flightAttendantRank)
+    {
+        switch (flightAttendantRank)
+        {
+        case EFlightAttendantRank::Pursers:
+            os << "Pursers";
+            break;
+        case EFlightAttendantRank::Stewards:
+            os << "Stewards";
+            break;
+        }
+        return os;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const FlightAttendant& flightAttendant);
 };
-
-#endif //AIRPORTPROJECT_FLIGHTATTENDANT_H

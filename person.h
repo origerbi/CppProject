@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <iostream>
 #include "date.h"
+#include <iostream>
 
 class Person
 {
@@ -24,7 +24,7 @@ public:
 
     Person(Person&& other) noexcept = default;
 
-    ~Person() = default;
+    ~Person();
 
     Person& operator=(const Person& other) = default;
 
@@ -38,9 +38,9 @@ public:
 
     void SetBirthDate(int day, int month, int year);
 
-    const char* GetFirstName() const;
+    char* GetFirstName() const;
 
-    const char* GetLastName() const;
+    char* GetLastName() const;
 
     const char* GetFullName() const;
 

@@ -27,7 +27,7 @@
     <ClInclude Include="employee.h" />
     <ClInclude Include="flight.h" />
     <ClInclude Include="flightAttendant.h" />
-    <ClInclude Include="groudCrew.h" />
+    <ClInclude Include="groundCrew.h" />
     <ClInclude Include="groundAttendant.h" />
     <ClInclude Include="luggage.h" />
     <ClInclude Include="passenger.h" />
@@ -36,12 +36,22 @@
     <ClInclude Include="plane.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="airCrew.cpp" />
+    <ClCompile Include="airline.cpp" />
+    <ClCompile Include="airport.cpp" />
+    <ClCompile Include="airportManager.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="employee.cpp" />
+    <ClCompile Include="flight.cpp" />
+    <ClCompile Include="flightAttendant.cpp" />
+    <ClCompile Include="groundAttendant.cpp" />
+    <ClCompile Include="groundCrew.cpp" />
     <ClCompile Include="luggage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="passenger.cpp" />
     <ClCompile Include="person.cpp" />
+    <ClCompile Include="pilot.cpp" />
+    <ClCompile Include="plane.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

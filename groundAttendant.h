@@ -2,37 +2,33 @@
 // Created by Simon Bruno on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_GROUNDATTENDANT_H
-#define AIRPORTPROJECT_GROUNDATTENDANT_H
+#pragma once
 
 #include "employee.h"
-#include "groudCrew.h"
+#include "groundCrew.h"
 
 class GroundAttendant : public Employee, public GroundCrew
 {
-private:
-    int flightNumber;
+    int FlightNumber;
 
 public:
     GroundAttendant(const Employee& employee, const GroundCrew& groundCrew);
 
     GroundAttendant(Employee&& employee, GroundCrew&& groundCrew);
 
-    GroundAttendant(const GroundAttendant& other);
+    GroundAttendant(const GroundAttendant& other) = default;
 
-    GroundAttendant(GroundAttendant&& other);
+    GroundAttendant(GroundAttendant&& other) = default;
 
-    ~GroundAttendant();
+    ~GroundAttendant() = default;
 
-    void setFlightNumber(int flightNumber);
+    void SetFlightNumber(int flightNumber);
 
-    int getFlightNumber();
+    int GetFlightNumber() const;
 
-    const GroundAttendant& operator=(const GroundAttendant& other);
+    GroundAttendant& operator=(const GroundAttendant& other) = default;
 
-    const GroundAttendant& operator=(GroundAttendant&& other);
+    GroundAttendant& operator=(GroundAttendant&& other) noexcept = default;
 
-    friend ostream& operator<<(ostream& os, const GroundAttendant& groundAttendant);
+    friend std::ostream& operator<<(std::ostream& os, const GroundAttendant& groundAttendant);
 };
-
-#endif //AIRPORTPROJECT_GROUNDATTENDANT_H

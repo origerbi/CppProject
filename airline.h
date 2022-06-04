@@ -2,67 +2,59 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_AIRLINE_H
-#define AIRPORTPROJECT_AIRLINE_H
+// ReSharper disable CppClangTidyModernizeAvoidCArrays
+#pragma once
 
-#include <iostream>
-#include "plane.h"
-#include "flight.h"
 #include "flightAttendant.h"
 #include "pilot.h"
+#include "plane.h"
+#include <iostream>
 
 class Airline
 {
-private:
     static constexpr int MAX_PLANES = 10;
     static constexpr int MAX_PILOTS = 10;
     static constexpr int MAX_CREW = 15;
-    static int counter;
+    static int Counter;
 
-    int id;
-    char* name;
-    Plane* planes[MAX_PLANES];
-    Pilot* pilots[MAX_PILOTS];
-    FlightAttendant* flightAttendants[MAX_CREW];
+    int Id{};
+    char* Name;
+    Plane* Planes[MAX_PLANES]{};
+    Pilot* Pilots[MAX_PILOTS]{};
+    FlightAttendant* FlightAttendants[MAX_CREW]{};
 
-    int numOfPlanes;
-    int numOfPilots;
-    int numOfFlightAttendants;
+    int NumOfPlanes{};
+    int NumOfPilots{};
+    int NumOfFlightAttendants{};
 
 public:
-    Airline(char* name);
+    explicit Airline(char* name);
 
-    Airline(const Airline& other);
+    Airline(const Airline& other) = default;
 
-    Airline(Airline&& other);
+    Airline(Airline&& other) = default;
 
     ~Airline();
 
-    const Airline& operator=(const Airline& other);
+    Airline& operator=(const Airline& other) = default;
 
-    const Airline& operator=(Airline&& other);
+    Airline& operator=(Airline&& other) = default;
 
-    int getId() const;
+    int GetId() const;
 
-    char* getName() const;
+    char* GetName() const;
 
-    void setName(char* name);
+    void SetName(char* name);
 
-    Plane* const* getPlanes() const;
+    Plane* const* GetPlanes() const;
 
-    Pilot* const* getPilots() const;
+    Pilot* const* GetPilots() const;
 
-    FlightAttendant* const* getFlightAttendants() const;
+    FlightAttendant* const* GetFlightAttendants() const;
 
     const Airline& operator+=(const Plane& plane); // add plane to airline
     const Airline& operator+=(const Pilot& pilot); // add pilot to flight
     const Airline& operator+=(const FlightAttendant& flightAttendants); // add flight attendant to flight
 
-    friend ostream& operator<<(ostream& os, const Airline& airline);
-
-    friend ostream& operator<<(ostream& os, const Flight** flights);
-
+    friend std::ostream& operator<<(std::ostream& os, const Airline& airline);
 };
-
-
-#endif //AIRPORTPROJECT_AIRLINE_H

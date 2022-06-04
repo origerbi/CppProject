@@ -16,13 +16,13 @@ protected:
 public:
     Passenger(const Person& base, int flightNumber, Luggage& luggage);
 
-    Passenger(Person&& base, int flightNumber, Luggage& luggage);
+    Passenger(Person&& base, int flightNumber, const Luggage& luggage);
 
     Passenger(const Passenger& other) = default;
 
     Passenger(Passenger&& other) noexcept = default;
 
-    ~Passenger() = default;
+    ~Passenger();
 
     Passenger& operator=(const Passenger& other) = default;
 
@@ -30,7 +30,7 @@ public:
 
     void SetFlightNumber(int flightNumber);
 
-    void SetLuggage(Luggage& luggage);
+    void SetLuggage(const Luggage& luggage) const;
 
     int GetFlightNumber() const;
 

@@ -2,81 +2,73 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_FLIGHT_H
-#define AIRPORTPROJECT_FLIGHT_H
+// ReSharper disable CppClangTidyModernizeAvoidCArrays
+#pragma once
 
-#include <iostream>
-#include <ctime>
+#include "airCrew.h"
+#include "date.h"
 #include "passenger.h"
 #include "plane.h"
-#include "date.h"
-
-using namespace std;
-
-class AirCrew;
+#include <iostream>
 
 class Flight
 {
-private:
     static constexpr int MAX_CAPACITY = 20;
     static constexpr int MAX_AIRCREW = 5;
 
-    int flightNumber;
-    char* src; // From
-    char* dst; // To
-    Date dateDeparture;
-    Passenger* passengers[MAX_CAPACITY];
-    AirCrew* airCrew[MAX_AIRCREW];
-    Plane* plane;
+    int FlightNumber;
+    char Src[4]; // From
+    char Dst[4]; // To
+    Date DateDeparture;
+    Passenger* Passengers[MAX_CAPACITY]{};
+    AirCrew* AirCrews[MAX_AIRCREW]{};
+    Plane* ThePlane{};
 
-    int numOfPassengers;
-    int numOfAirCrew;
+    int NumOfPassengers{};
+    int NumOfAirCrew{};
 
 public:
     Flight(int flightNumber, char* src, char* dst, Date dateDeparture);
 
-    Flight(const Flight& other);
+    Flight(const Flight& other) = default;
 
-    Flight(Flight&& other);
+    Flight(Flight&& other) = default;
 
     ~Flight();
 
-    const Flight& operator=(const Flight& other);
+    Flight& operator=(const Flight& other) = default;
 
-    const Flight& operator=(Flight&& other);
+    Flight& operator=(Flight&& other) = default;
 
-    int getFlightNumber() const;
+    int GetFlightNumber() const;
 
-    void setFlightNumber(int flightNumber);
+    void SetFlightNumber(int flightNumber);
 
-    char* getSrc() const;
+    const char* GetSrc() const;
 
-    void setSrc(char* src);
+    void SetSrc(const char* src);
 
-    char* getDst() const;
+    const char* GetDst() const;
 
-    void setDst(char* dst);
+    void SetDst(const char* dst);
 
-    Date getDateDeparture();
+    Date GetDateDeparture() const;
 
-    void setDateDeparture(Date dateDeparture);
+    void SetDateDeparture(Date dateDeparture);
 
-    Passenger* const* getPassengers() const;
+    Passenger* const* GetPassengers() const;
 
-    AirCrew* const* getAirCrew() const;
+    AirCrew* const* GetAirCrew() const;
 
-    Plane* getPlane() const;
+    Plane* GetPlane() const;
 
-    void setPlane(Plane* plane);
+    void SetPlane(Plane* plane);
 
     const Flight& operator+=(const Passenger& passenger); // add passenger to flight
     const Flight& operator+=(const AirCrew& airCrew); // add air crew to flight
-    bool operator<(int capacity); // check if there are available seats
-    bool operator==(const Flight& flight); // check if same flight
+    bool operator<(int capacity) const; // check if there are available seats
+    bool operator==(const Flight& flight) const; // check if same flight
 
 
-    friend ostream& operator<<(ostream& os, const Flight& flight);
+    friend std::ostream& operator<<(std::ostream& os, const Flight& flight);
 };
-
-
-#endif //AIRPORTPROJECT_FLIGHT_H

@@ -7,6 +7,12 @@ Person::Person(char* firstName, char* lastName, const Date birthDate) : FirstNam
 {
 }
 
+Person::~Person()
+{
+    delete[] FirstName;
+    delete[] LastName;
+}
+
 void Person::SetFirstName(char* firstName)
 {
     FirstName = firstName;
@@ -27,21 +33,21 @@ void Person::SetBirthDate(const int day, const int month, const int year)
     BirthDate = Date(day, month, year);
 }
 
-const char* Person::GetFirstName() const
+char* Person::GetFirstName() const
 {
     return FirstName;
 }
 
-const char* Person::GetLastName() const
+char* Person::GetLastName() const
 {
     return LastName;
 }
 
 const char* Person::GetFullName() const
 {
-    const auto fullName = new char[strlen(FirstName) + strlen(LastName) + 1];
+    auto* const fullName = new char[strlen(FirstName) + strlen(LastName) + 1];
     strcpy(fullName, FirstName);
-    strcpy(fullName + strlen(FirstName), LastName);
+    strcpy(&fullName[strlen(FirstName)], LastName);
     return fullName;
 }
 
@@ -57,8 +63,10 @@ Date Person::GetBirthDate() const
 
 std::ostream& operator<<(std::ostream& os, const Person& person)
 {
-    os << "Name: " << person.GetFullName() << std::endl;
+    const char* fullName = person.GetFullName();
+    os << "Name: " << fullName << std::endl;
     os << "Id: " << person.GetId() << std::endl;
     os << "Birth date: " << person.GetBirthDate() << std::endl;
+    delete[] fullName;
     return os;
 }

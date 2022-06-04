@@ -2,44 +2,55 @@
 // Created by Simon Bruno on 10/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_PILOT_H
-#define AIRPORTPROJECT_PILOT_H
+#pragma once
 
-#include "employee.h"
 #include "airCrew.h"
+#include "employee.h"
 
 class Pilot : public Employee, public AirCrew
 {
 public:
-    enum class ePilotRank
+    enum class EPilotRank
     {
-        CAPTAIN, FIRST_OFFICER
+        Captain,
+        FirstOfficer
     };
 
 private:
-    ePilotRank pilotRank;
+    EPilotRank PilotRank;
 
 public:
-    Pilot(const Employee& employee, const AirCrew& airCrew, ePilotRank pilotRank);
+    Pilot(const Employee& employee, const AirCrew& airCrew, EPilotRank pilotRank);
 
-    Pilot(Employee&& employee, AirCrew&& airCrew, ePilotRank pilotRank);
+    Pilot(Employee&& employee, AirCrew&& airCrew, EPilotRank pilotRank);
 
-    Pilot(const Pilot& other);
+    Pilot(const Pilot& other) = default;
 
-    Pilot(Pilot&& other);
+    Pilot(Pilot&& other) noexcept = default;
 
-    ~Pilot();
+    ~Pilot() = default;
 
-    void setPilotRank(ePilotRank pilotRank);
+    void SetPilotRank(EPilotRank pilotRank);
 
-    ePilotRank getPilotRank();
+    EPilotRank GetPilotRank() const;
 
-    const Pilot& operator=(const Pilot& other);
+    Pilot& operator=(const Pilot& other) = default;
 
-    const Pilot& operator=(Pilot&& other);
+    Pilot& operator=(Pilot&& other) noexcept = default;
 
-    friend ostream& operator<<(ostream& os, const Pilot& pilot);
+    friend std::ostream& operator<<(std::ostream& os, const EPilotRank& pilotRank)
+    {
+        switch (pilotRank)
+        {
+        case EPilotRank::Captain:
+            os << "Captain";
+            break;
+        case EPilotRank::FirstOfficer:
+            os << "First Officer";
+            break;
+        }
+        return os;
+    }
 
+    friend std::ostream& operator<<(std::ostream& os, const Pilot& pilot);
 };
-
-#endif //AIRPORTPROJECT_PILOT_H

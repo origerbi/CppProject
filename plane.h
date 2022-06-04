@@ -2,53 +2,51 @@
 // Created by Eddie Rudoy on 09/05/2022.
 //
 
-#ifndef AIRPORTPROJECT_PLANE_H
-#define AIRPORTPROJECT_PLANE_H
+#pragma once
 
 #include <iostream>
-
-using namespace std;
 
 class Plane
 {
 public:
-    enum class eAircraft
+    enum class EAircraft
     {
-        AIRBUS_A320, AIRBUS_A321, BOEING_737, BOEING_787
+        AirbusA320,
+        AirbusA321,
+        Boeing737,
+        Boeing787
     };
 
 private:
-    int id;
-    int maxCapacity;
-    eAircraft theAircraft;
+    int Id;
+    int MaxCapacity;
+    EAircraft TheAircraft;
 
 public:
-    Plane(int id, int maxCapacity, eAircraft theAircraft);
+    Plane(int id, int maxCapacity, EAircraft theAircraft);
 
-    Plane(const Plane& other);
+    Plane(const Plane& other) = default;
 
-    Plane(Plane&& other);
+    Plane(Plane&& other) noexcept = default;
 
-    ~Plane();
+    ~Plane() = default;
 
-    const Plane& operator=(const Plane& other);
+    Plane& operator=(const Plane& other) = default;
 
-    const Plane& operator=(Plane&& other);
+    Plane& operator=(Plane&& other) = default;
 
-    int getId() const;
+    int GetId() const;
 
-    void setId(int id);
+    void SetId(int id);
 
-    int getMaxCapacity() const;
+    int GetMaxCapacity() const;
 
-    void setMaxCapacity(int maxCapacity);
+    void SetMaxCapacity(int maxCapacity);
 
-    eAircraft getTheAircraft() const;
+    EAircraft GetTheAircraft() const;
 
-    void setTheAircraft(eAircraft theAircraft);
+    void SetTheAircraft(EAircraft theAircraft);
 
-    friend ostream& operator<<(ostream& os, const Plane& plane);
+    friend std::ostream& operator<<(std::ostream& os, const EAircraft& theAircraft);
+    friend std::ostream& operator<<(std::ostream& os, const Plane& plane);
 };
-
-
-#endif //AIRPORTPROJECT_PLANE_H
