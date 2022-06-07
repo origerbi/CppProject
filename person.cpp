@@ -2,25 +2,21 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "person.h"
 
-Person::Person(char* firstName, char* lastName, const Date birthDate) : FirstName(firstName), LastName(lastName),
-                                                                        Id(Counter++), BirthDate(birthDate)
+Person::Person(const char* firstName, const char* lastName, const Date birthDate) : FirstName(), LastName(),
+    Id(Counter++), BirthDate(birthDate)
 {
+    strcpy_s(FirstName, firstName);
+    strcpy_s(LastName, lastName);
 }
 
-Person::~Person()
+void Person::SetFirstName(const char* firstName)
 {
-    delete[] FirstName;
-    delete[] LastName;
+    strcpy_s(FirstName, firstName);
 }
 
-void Person::SetFirstName(char* firstName)
+void Person::SetLastName(const char* lastName)
 {
-    FirstName = firstName;
-}
-
-void Person::SetLastName(char* lastName)
-{
-    LastName = lastName;
+    strcpy_s(LastName, lastName);
 }
 
 void Person::SetId(const int id)
@@ -33,21 +29,22 @@ void Person::SetBirthDate(const int day, const int month, const int year)
     BirthDate = Date(day, month, year);
 }
 
-char* Person::GetFirstName() const
+const char* Person::GetFirstName() const
 {
     return FirstName;
 }
 
-char* Person::GetLastName() const
+const char* Person::GetLastName() const
 {
     return LastName;
 }
 
 const char* Person::GetFullName() const
 {
-    auto* const fullName = new char[strlen(FirstName) + strlen(LastName) + 1];
+    auto* const fullName = new char[strlen(FirstName) + strlen(LastName) + 2];
     strcpy(fullName, FirstName);
-    strcpy(&fullName[strlen(FirstName)], LastName);
+    strcat(fullName, " ");
+    strcpy(&fullName[strlen(FirstName) + 1], LastName);
     return fullName;
 }
 
@@ -70,3 +67,5 @@ std::ostream& operator<<(std::ostream& os, const Person& person)
     delete[] fullName;
     return os;
 }
+
+int Person::Counter = 0;

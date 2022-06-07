@@ -18,13 +18,15 @@ public:
 
     AirCrew(AirCrew&& other) noexcept = default;
 
-    ~AirCrew() = default;
+    virtual ~AirCrew() = default;
 
     AirCrew& operator=(const AirCrew& other) = default;
 
     AirCrew& operator=(AirCrew&& other) noexcept = default;
 
     int GetAirlineId() const;
+
+    virtual void Print(std::ostream& os) const;
 
     friend std::ostream& operator<<(std::ostream& os, const AirCrew& airCrew);
 };

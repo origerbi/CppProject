@@ -11,6 +11,8 @@
 #include "plane.h"
 #include <iostream>
 
+#include "airline.h"
+
 class Flight
 {
     static constexpr int MAX_CAPACITY = 20;
@@ -20,6 +22,7 @@ class Flight
     char Src[4]; // From
     char Dst[4]; // To
     Date DateDeparture;
+    Airline* TheAirline;
     Passenger* Passengers[MAX_CAPACITY]{};
     AirCrew* AirCrews[MAX_AIRCREW]{};
     Plane* ThePlane{};
@@ -28,7 +31,7 @@ class Flight
     int NumOfAirCrew{};
 
 public:
-    Flight(int flightNumber, char* src, char* dst, Date dateDeparture);
+    Flight(int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane);
 
     Flight(const Flight& other) = default;
 
@@ -41,6 +44,8 @@ public:
     Flight& operator=(Flight&& other) = default;
 
     int GetFlightNumber() const;
+
+    Airline* GetAirline() const;
 
     void SetFlightNumber(int flightNumber);
 
@@ -65,7 +70,7 @@ public:
     void SetPlane(Plane* plane);
 
     const Flight& operator+=(const Passenger& passenger); // add passenger to flight
-    const Flight& operator+=(const AirCrew& airCrew); // add air crew to flight
+    const Flight& operator+=(AirCrew* airCrew); // add air crew to flight
     bool operator<(int capacity) const; // check if there are available seats
     bool operator==(const Flight& flight) const; // check if same flight
 

@@ -4,25 +4,25 @@
 
 #pragma once
 
-#include "person.h"
 #include "luggage.h"
+#include "person.h"
 
-class Passenger : virtual public Person
+class Passenger final : virtual public Person
 {
 protected:
     int FlightNumber;
     Luggage* PassengerLuggage;
 
 public:
-    Passenger(const Person& base, int flightNumber, Luggage& luggage);
+    Passenger(const Person& base, int flightNumber, const Luggage& luggage);
 
     Passenger(Person&& base, int flightNumber, const Luggage& luggage);
 
-    Passenger(const Passenger& other) = default;
+    Passenger(const Passenger& other);
 
     Passenger(Passenger&& other) noexcept = default;
 
-    ~Passenger();
+    ~Passenger() override;
 
     Passenger& operator=(const Passenger& other) = default;
 
@@ -37,5 +37,4 @@ public:
     const Luggage& GetLuggage() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Passenger& passenger);
-
 };

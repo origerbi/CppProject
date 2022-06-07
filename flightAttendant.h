@@ -26,9 +26,9 @@ public:
 
     FlightAttendant(const FlightAttendant& other) = default;
 
-    FlightAttendant(FlightAttendant&& other) noexcept = default;
+    ~FlightAttendant() override = default;
 
-    ~FlightAttendant() = default;
+    FlightAttendant(FlightAttendant&& other) noexcept = default;
 
     void SetAttendantRank(EFlightAttendantRank flightAttendantRank);
 
@@ -37,6 +37,8 @@ public:
     FlightAttendant& operator=(const FlightAttendant& other) = default;
 
     FlightAttendant& operator=(FlightAttendant&& other) noexcept = default;
+
+    void Print(std::ostream& os) const override;
 
     friend std::ostream& operator<<(std::ostream& os, const EFlightAttendantRank& flightAttendantRank)
     {

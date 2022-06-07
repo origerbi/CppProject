@@ -16,7 +16,7 @@ protected:
     bool IsAvailable;
 
 public:
-    Employee(const Person& base, double salary, Date startDate, bool isAvailable = false);
+    Employee(const Person& base, double salary, Date startDate, bool isAvailable = true);
 
     Employee(Person&& base, int employeeId, double salary, Date startDate, bool isAvailable);
 
@@ -24,7 +24,7 @@ public:
 
     Employee(Employee&& other) noexcept = default;
 
-    ~Employee() = default;
+    ~Employee() override = default;
 
     void SetSalary(double salary);
 

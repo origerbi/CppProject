@@ -1,10 +1,15 @@
 ﻿#include "passenger.h"
 
-Passenger::Passenger(const Person& base, const int flightNumber, Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(&luggage)
+Passenger::Passenger(const Person& base, const int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
 {
 }
 
 Passenger::Passenger(Person&& base, const int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
+{
+}
+
+Passenger::Passenger(const Passenger& other) : Person(other), FlightNumber(other.GetFlightNumber()),
+                                               PassengerLuggage(new Luggage(other.GetLuggage()))
 {
 }
 

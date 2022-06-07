@@ -2,8 +2,9 @@
 
 int Airline::Counter = 0;
 
-Airline::Airline(char* name) : Id(Counter++), Name(name)
+Airline::Airline(const char* name) : Id(Counter++), Name()
 {
+    strcpy_s(Name, name);
 }
 
 Airline::~Airline()
@@ -27,14 +28,14 @@ int Airline::GetId() const
     return Id;
 }
 
-char* Airline::GetName() const
+const char* Airline::GetName() const
 {
     return Name;
 }
 
-void Airline::SetName(char* name)
+void Airline::SetName(const char* name)
 {
-    Name = name;
+    strcpy_s(Name, name);
 }
 
 Plane* const* Airline::GetPlanes() const
@@ -52,11 +53,26 @@ FlightAttendant* const* Airline::GetFlightAttendants() const
     return FlightAttendants;
 }
 
+int Airline::GetNumOfPlanes() const
+{
+    return NumOfPlanes;
+}
+
+int Airline::GetNumPilots() const
+{
+    return NumOfPilots;
+}
+
+int Airline::GetNumFlightAttendants() const
+{
+    return NumOfFlightAttendants;
+}
+
 const Airline& Airline::operator+=(const Plane& plane)
 {
     if (NumOfPlanes < MAX_PLANES)
     {
-        Planes[NumOfPlanes++] = new Plane(plane); 
+        Planes[NumOfPlanes++] = new Plane(plane);
     }
     return *this;
 }

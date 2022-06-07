@@ -1,7 +1,10 @@
 ﻿#include "flight.h"
 
-Flight::Flight(const int flightNumber, char* src, char* dst, const Date dateDeparture) : FlightNumber(flightNumber), Src(src), Dst(dst), DateDeparture(dateDeparture)
+Flight::Flight(const int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src{},
+    Dst{}, DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
 {
+    strcpy_s(Src, src);
+    strcpy_s(Dst, dst);
 }
 
 Flight::~Flight()
@@ -15,6 +18,11 @@ Flight::~Flight()
 int Flight::GetFlightNumber() const
 {
     return FlightNumber;
+}
+
+Airline* Flight::GetAirline() const
+{
+    return TheAirline;
 }
 
 void Flight::SetFlightNumber(const int flightNumber)
@@ -82,11 +90,11 @@ const Flight& Flight::operator+=(const Passenger& passenger)
     return *this;
 }
 
-const Flight& Flight::operator+=(const AirCrew& airCrew)
+const Flight& Flight::operator+=(AirCrew* airCrew)
 {
     if (NumOfAirCrew < MAX_AIRCREW)
     {
-        AirCrews[NumOfAirCrew] = new AirCrew(airCrew);
+        AirCrews[NumOfAirCrew] = airCrew;
         NumOfAirCrew++;
     }
     return *this;
@@ -108,7 +116,7 @@ std::ostream& operator<<(std::ostream& os, const Flight& flight)
     os << "Source: " << flight.GetSrc() << std::endl;
     os << "Destination: " << flight.GetDst() << std::endl;
     os << "Date of departure: " << flight.GetDateDeparture() << std::endl;
-    os << "Plane: " << flight.GetPlane() << std::endl;
+    os << "Plane: " << *flight.GetPlane() << std::endl;
     os << "Passengers: " << std::endl;
     for (int i = 0; i < flight.NumOfPassengers; i++)
     {

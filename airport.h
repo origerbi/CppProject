@@ -58,6 +58,6 @@ public:
     bool operator==(const Airport& airport) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Airport& airport);
-    Airport& operator+=(const Flight& flight);
+    Airport& operator+=(Flight* flight);
     Airport& operator+=(const GroundCrew& crew);
 };

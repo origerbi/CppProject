@@ -19,8 +19,13 @@ FlightAttendant::EFlightAttendantRank FlightAttendant::GetAttendantRank() const
     return FlightAttendantRank;
 }
 
+void FlightAttendant::Print(std::ostream& os) const
+{
+    os << *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const FlightAttendant& flightAttendant)
 {
-    os << static_cast<const Employee&>(flightAttendant) << static_cast<const AirCrew&>(flightAttendant) << "Flight attendant rank: " << flightAttendant.GetAttendantRank() << std::endl;
+    os << static_cast<const Employee&>(flightAttendant) << "Flight attendant rank: " << flightAttendant.GetAttendantRank() << std::endl;
     return os;
 }

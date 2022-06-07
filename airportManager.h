@@ -51,9 +51,9 @@ public:
 
     Airline* FindAirline(const char* name) const;
 
-    void FindFlights(char* src, char* dest);
+    void DisplayFilteredFlights(const char* src, const char* dest) const;
 
-    bool RegisterFlight(const Airline& airline, const Flight& flight);
+    bool RegisterFlight(const Flight& flight) const;
 
     bool AddPassengerToFlight(const Passenger& passenger, int flightNumber) const;
 
@@ -63,7 +63,7 @@ public:
 
     bool AddFlightAttendantToAirline(const FlightAttendant& employee, int id) const;
 
-    Flight& AssembleCrew(int flightNumber);
+    Flight* FindFlight(int flightNumber) const;
 
     friend std::ostream& operator<<(std::ostream& os, const AirportManager& airportManager);
 };

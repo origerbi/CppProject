@@ -18,7 +18,7 @@ class Airline
     static int Counter;
 
     int Id{};
-    char* Name;
+    char Name[50];
     Plane* Planes[MAX_PLANES]{};
     Pilot* Pilots[MAX_PILOTS]{};
     FlightAttendant* FlightAttendants[MAX_CREW]{};
@@ -28,7 +28,7 @@ class Airline
     int NumOfFlightAttendants{};
 
 public:
-    explicit Airline(char* name);
+    explicit Airline(const char* name);
 
     Airline(const Airline& other) = default;
 
@@ -42,15 +42,21 @@ public:
 
     int GetId() const;
 
-    char* GetName() const;
+    const char* GetName() const;
 
-    void SetName(char* name);
+    void SetName(const char* name);
 
     Plane* const* GetPlanes() const;
 
     Pilot* const* GetPilots() const;
 
     FlightAttendant* const* GetFlightAttendants() const;
+
+    int GetNumOfPlanes() const;
+
+    int GetNumPilots() const;
+
+    int GetNumFlightAttendants() const;
 
     const Airline& operator+=(const Plane& plane); // add plane to airline
     const Airline& operator+=(const Pilot& pilot); // add pilot to flight

@@ -18,8 +18,13 @@ Pilot::EPilotRank Pilot::GetPilotRank() const
     return PilotRank;
 }
 
+void Pilot::Print(std::ostream& os) const
+{
+    os << *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const Pilot& pilot)
 {
-    os << static_cast<const Employee&>(pilot) << static_cast<const AirCrew&>(pilot) << "Pilot rank: " << pilot.GetPilotRank() << std::endl;
+    os << static_cast<const Employee&>(pilot) << "Pilot rank: " << pilot.GetPilotRank() << std::endl;
     return os;
 }

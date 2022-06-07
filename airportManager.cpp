@@ -76,21 +76,32 @@ Airline* AirportManager::FindAirline(const char* name) const
     return nullptr;
 }
 
-void AirportManager::FindFlights(char* src, char* dest)
+void AirportManager::DisplayFilteredFlights(const char* src, const char* dest) const
 {
     Airport* srcAirport = FindAirportByCode(src);
-    if(srcAirport != nullptr)
+    if (srcAirport != nullptr)
     {
         Flight* const* flights = srcAirport->GetFlights();
+        const int numFlights = srcAirport->GetNumOfFlights();
+        for (int i = 0; i < numFlights; i++)
+        {
+            if (strcmp(flights[i]->GetDst(), dest) == 0)
+            {
+                std::cout << *flights[i] << std::endl;
+            }
+        }
     }
 }
 
-bool AirportManager::RegisterFlight(const Airline& airline, const Flight& flight)
+bool AirportManager::RegisterFlight(const Flight& flight) const
 {
     Airport* srcAirport = FindAirportByCode(flight.GetSrc());
-    if (srcAirport != nullptr)
+    Airport* destAirport = FindAirportByCode(flight.GetDst());
+    if (srcAirport != nullptr && destAirport != nullptr)
     {
-        *srcAirport += flight;
+        auto* const f = new Flight(flight);
+        *srcAirport += f;
+        *destAirport += f;
         return true;
     }
     return false;
@@ -154,7 +165,7 @@ bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee
     return false;
 }
 
-Flight& AirportManager::AssembleCrew(int flightNumber)
+Flight* AirportManager::FindFlight(const int flightNumber) const
 {
     for (int i = 0; i < NumOfAirports; i++)
     {
@@ -165,9 +176,9 @@ Flight& AirportManager::AssembleCrew(int flightNumber)
             Flight* flight = flights[j];
             if (flight->GetFlightNumber() == flightNumber)
             {
-                flight += 
-                return *flight;
+                return flight;
             }
         }
     }
+    return nullptr;
 }

@@ -11,7 +11,10 @@ Airport::~Airport()
 {
     for (int i = 0; i < NumOfFlights; i++)
     {
-        delete Flights[i];
+        if (strcmp(Flights[i]->GetSrc(), Iata) == 0)
+        {
+            delete Flights[i];
+        }
     }
     for (int i = 0; i < NumOfCrew; i++)
     {
@@ -74,11 +77,11 @@ bool Airport::operator==(const Airport& airport) const
     return strcmp(Iata, airport.Iata) == 0;
 }
 
-Airport& Airport::operator+=(const Flight& flight)
+Airport& Airport::operator+=(Flight* flight)
 {
     if (NumOfFlights < MAX_FLIGHTS)
     {
-        Flights[NumOfFlights] = new Flight(flight);
+        Flights[NumOfFlights] = flight;
         NumOfFlights++;
     }
     return *this;

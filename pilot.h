@@ -7,7 +7,7 @@
 #include "airCrew.h"
 #include "employee.h"
 
-class Pilot : public Employee, public AirCrew
+class Pilot final : public Employee, public AirCrew
 {
 public:
     enum class EPilotRank
@@ -28,7 +28,7 @@ public:
 
     Pilot(Pilot&& other) noexcept = default;
 
-    ~Pilot() = default;
+    ~Pilot() override = default;
 
     void SetPilotRank(EPilotRank pilotRank);
 
@@ -51,6 +51,8 @@ public:
         }
         return os;
     }
+
+    void Print(std::ostream& os) const override;
 
     friend std::ostream& operator<<(std::ostream& os, const Pilot& pilot);
 };
