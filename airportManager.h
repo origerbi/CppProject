@@ -5,23 +5,20 @@
 // ReSharper disable CppClangTidyModernizeAvoidCArrays
 #pragma once
 
+#include <vector>
+
 #include "airline.h"
 #include "airport.h"
 #include "flightAttendant.h"
 #include "groundAttendant.h"
 #include "pilot.h"
-#include <iostream>
+
+#include "linkedList.h"
 
 class AirportManager
 {
-    static constexpr int MAX_AIRPORTS = 5;
-    static constexpr int MAX_AIRLINES = 10;
-
-    Airport* Airports[MAX_AIRPORTS];
-    Airline* Airlines[MAX_AIRLINES];
-
-    int NumOfAirports;
-    int NumOfAirlines;
+    LinkedList<Airport> Airports;
+    std::vector<Airline> Airlines;
 
 public:
     AirportManager() = default;
@@ -34,15 +31,11 @@ public:
 
     AirportManager& operator=(AirportManager&& other) = default;
 
-    ~AirportManager();
+    ~AirportManager() = default;
 
-    Airport* const* GetAirports() const;
+    LinkedList<Airport>* GetAirports();
 
-    Airline* const* GetAirlines() const;
-
-    int GetNumOfAirports() const;
-
-    int GetNumOfAirlines() const;
+    std::vector<Airline>& GetAirlines();
 
     const AirportManager& operator+=(const Airport& airport); // add airport to airport manager
     const AirportManager& operator+=(const Airline& airline); // add airline to airport manager

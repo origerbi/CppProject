@@ -356,8 +356,14 @@ void DisplayFilteredFlights(const AirportManager* pManager)
     pManager->DisplayFilteredFlights(src, dest);
 }
 
-void DisplayFlights(const AirportManager* pManager)
+void DisplayFlights(AirportManager* pManager)
 {
+    LinkedList<Airport>* temp = pManager->GetAirports();
+    do
+    {
+        
+    }
+    while (temp->HasNext());
     for (int i = 0; i < pManager->GetNumOfAirports(); ++i)
     {
         Flight* const* flights = pManager->GetAirports()[i]->GetFlights();

@@ -22,7 +22,7 @@ Airport::~Airport()
     }
 }
 
-char* Airport::GetIata()
+const char* Airport::GetIata() const
 {
     return Iata;
 }

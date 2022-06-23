@@ -35,7 +35,7 @@ public:
 
     Airport& operator=(Airport&& other) = default;
 
-    char* GetIata();
+    const char* GetIata() const;
 
     void SetIata(const char* iata);
 

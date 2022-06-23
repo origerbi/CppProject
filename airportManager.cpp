@@ -1,76 +1,53 @@
 ﻿#include "airportManager.h"
 
-AirportManager::~AirportManager()
+LinkedList<Airport>* AirportManager::GetAirports()
 {
-    for (int i = 0; i < NumOfAirports; i++)
-    {
-        delete Airports[i];
-    }
-    for (int i = 0; i < NumOfAirlines; i++)
-    {
-        delete Airlines[i];
-    }
+    return &Airports;
 }
 
-Airport* const* AirportManager::GetAirports() const
-{
-    return Airports;
-}
-
-Airline* const* AirportManager::GetAirlines() const
+std::vector<Airline>& AirportManager::GetAirlines()
 {
     return Airlines;
 }
 
-int AirportManager::GetNumOfAirports() const
-{
-    return NumOfAirports;
-}
-
-int AirportManager::GetNumOfAirlines() const
-{
-    return NumOfAirlines;
-}
-
 const AirportManager& AirportManager::operator+=(const Airport& airport)
 {
-    if (NumOfAirports < MAX_AIRPORTS)
-    {
-        Airports[NumOfAirports] = new Airport(airport);
-        NumOfAirports++;
-    }
+    Airports.AddItem(airport);
     return *this;
 }
 
 const AirportManager& AirportManager::operator+=(const Airline& airline)
 {
-    if (NumOfAirlines < MAX_AIRLINES)
-    {
-        Airlines[NumOfAirlines] = new Airline(airline);
-        NumOfAirlines++;
-    }
+    Airlines.emplace_back(airline);
     return *this;
 }
 
 Airport* AirportManager::FindAirportByCode(const char* code) const
 {
-    for (int i = 0; i < NumOfAirports; i++)
+    const LinkedList<Airport>* temp = &Airports;
+    if (!temp->HasNext())
     {
-        if (strcmp(Airports[i]->GetIata(), code) == 0)
+        return nullptr;
+    }
+    do
+    {
+        temp = temp->Next;
+        if (strcmp(temp->Value->GetIata(), code) == 0)
         {
-            return Airports[i];
+            return temp->Value;
         }
     }
+    while (temp->HasNext());
     return nullptr;
 }
 
 Airline* AirportManager::FindAirline(const char* name) const
 {
-    for (int i = 0; i < NumOfAirlines; i++)
+    for (auto iterator = Airlines.begin(); iterator != Airlines.end(); ++iterator)
     {
-        if (strcmp(Airlines[i]->GetName(), name) == 0)
+        if (strcmp(iterator->GetName(), name) == 0)
         {
-            return Airlines[i];
+            return iterator._Ptr;
         }
     }
     return nullptr;
@@ -109,9 +86,15 @@ bool AirportManager::RegisterFlight(const Flight& flight) const
 
 bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int flightNumber) const
 {
-    for (int i = 0; i < NumOfAirports; i++)
+    const LinkedList<Airport>* temp = &Airports;
+    if (!temp->HasNext())
     {
-        Airport* airport = Airports[i];
+        return false;
+    }
+    do
+    {
+        temp = temp->Next;
+        Airport* airport = temp->Value;
         Flight* const* flights = airport->GetFlights();
         for (int j = 0; j < airport->GetNumOfFlights(); j++)
         {
@@ -123,29 +106,28 @@ bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int 
             }
         }
     }
+    while (temp->HasNext());
     return false;
 }
 
 bool AirportManager::AddEmployeeToAirport(const GroundAttendant& employee, const char* code) const
 {
-    for (int i = 0; i < NumOfAirports; i++)
+    Airport* airport = FindAirportByCode(code);
+    if (airport == nullptr)
     {
-        if (strcmp(Airports[i]->GetIata(), code) == 0)
-        {
-            *Airports[i] += employee;
-            return true;
-        }
+        return false;
     }
-    return false;
+    *airport += employee;
+    return true;
 }
 
 bool AirportManager::AddPilotToAirline(const Pilot& employee, const int id) const
 {
-    for (int i = 0; i < NumOfAirlines; i++)
+    for (auto iterator = Airlines.begin(); iterator != Airlines.end(); ++iterator)
     {
-        if (Airlines[i]->GetId() == id)
+        if (iterator->GetId() == id)
         {
-            *Airlines[i] += employee;
+            *iterator._Ptr += employee;
             return true;
         }
     }
@@ -154,11 +136,11 @@ bool AirportManager::AddPilotToAirline(const Pilot& employee, const int id) cons
 
 bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee, const int id) const
 {
-    for (int i = 0; i < NumOfAirlines; i++)
+    for (auto iterator = Airlines.begin(); iterator != Airlines.end(); ++iterator)
     {
-        if (Airlines[i]->GetId() == id)
+        if (iterator->GetId() == id)
         {
-            *Airlines[i] += employee;
+            *iterator._Ptr += employee;
             return true;
         }
     }
@@ -167,9 +149,15 @@ bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee
 
 Flight* AirportManager::FindFlight(const int flightNumber) const
 {
-    for (int i = 0; i < NumOfAirports; i++)
+    const LinkedList<Airport>* temp = &Airports;
+    if (!temp->HasNext())
     {
-        Airport* airport = Airports[i];
+        return nullptr;
+    }
+    do
+    {
+        temp = temp->Next;
+        Airport* airport = temp->Value;
         Flight* const* flights = airport->GetFlights();
         for (int j = 0; j < airport->GetNumOfFlights(); j++)
         {
@@ -180,5 +168,6 @@ Flight* AirportManager::FindFlight(const int flightNumber) const
             }
         }
     }
+    while (temp->HasNext());
     return nullptr;
 }

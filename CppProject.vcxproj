@@ -29,6 +29,7 @@
     <ClInclude Include="flightAttendant.h" />
     <ClInclude Include="groundCrew.h" />
     <ClInclude Include="groundAttendant.h" />
+    <ClInclude Include="linkedList.h" />
     <ClInclude Include="luggage.h" />
     <ClInclude Include="passenger.h" />
     <ClInclude Include="person.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="flightAttendant.cpp" />
     <ClCompile Include="groundAttendant.cpp" />
     <ClCompile Include="groundCrew.cpp" />
+    <ClCompile Include="linkedList.cpp" />
     <ClCompile Include="luggage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="passenger.cpp" />
