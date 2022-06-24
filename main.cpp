@@ -2,6 +2,7 @@
 #include "airportManager.h"
 #include "airport.h"
 #include "date.h"
+#include "AddAirportCommand.h"
 
 void AddAirline(AirportManager* pManager);
 
@@ -112,9 +113,9 @@ int main() // NOLINT(bugprone-exception-escape)
 
 void AddAirport(AirportManager* pManager)
 {
-    char iata[4];
-    char name[50];
-    char city[50];
+    std::string iata;
+    std::string name;
+    std::string city;
     cout << "Add New Airport\n";
     cout << "Enter airport's IATA code (3 chars code, e.g London Heathrow- LHR)\n";
     cin >> iata;
@@ -122,9 +123,8 @@ void AddAirport(AirportManager* pManager)
     cin >> name;
     cout << "Enter airport's city\n";
     cin >> city;
-    const Airport airport{iata, name, city};
-
-    *pManager += airport;
+    AddAirportCommand command(pManager, iata, name, city);
+	command.execute();
 }
 
 void AddAirline(AirportManager* pManager)
@@ -166,7 +166,7 @@ Employee InitEmployee()
 
 void AddEmployeeAirport(AirportManager* pManager)
 {
-    char code[4];
+    std::string code;
     cout << "Add employee to airport\n";
     const Employee employee = InitEmployee();
 
@@ -189,7 +189,7 @@ Pilot* InitPilot(const Employee& employee, const int airlineId)
 {
     int rank;
     cout << "Choose pilots rank\n";
-    cout << "0 - Captain\n1 - FIRST_OFFICER\n";
+    cout << "0 - Captain\n1 - First Officer\n";
     cin >> rank;
 
     return new Pilot(employee, AirCrew(airlineId), static_cast<Pilot::EPilotRank>(rank));
@@ -299,8 +299,8 @@ void RegisterFlight(AirportManager* pManager)
 
 void AddPassengerToFlight(AirportManager* pManager)
 {
-    char firstName[50];
-    char lastName[50];
+    std::string firstName;
+    std::string lastName;
     int day;
     int month;
     int year;
@@ -343,8 +343,8 @@ void AssembleCrew(AirportManager* pManager)
 
 void DisplayFilteredFlights(const AirportManager* pManager)
 {
-    char src[4];
-    char dest[4];
+    std::string src;
+    std::string dest;
 
     cout << "Find Flights between 2 airports\n";
     cout << "Enter Source Airport code (IATA)\n";

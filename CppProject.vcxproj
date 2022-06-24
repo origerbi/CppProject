@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddAirportCommand.h" />
     <ClInclude Include="airCrew.h" />
     <ClInclude Include="airline.h" />
     <ClInclude Include="airport.h" />
     <ClInclude Include="airportManager.h" />
+    <ClInclude Include="command.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="flight.h" />
@@ -37,10 +39,12 @@
     <ClInclude Include="plane.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddAirportCommand.cpp" />
     <ClCompile Include="airCrew.cpp" />
     <ClCompile Include="airline.cpp" />
     <ClCompile Include="airport.cpp" />
     <ClCompile Include="airportManager.cpp" />
+    <ClCompile Include="command.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="employee.cpp" />
     <ClCompile Include="flight.cpp" />
