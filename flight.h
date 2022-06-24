@@ -15,33 +15,18 @@
 
 class Flight
 {
-    static constexpr int MAX_CAPACITY = 20;
-    static constexpr int MAX_AIRCREW = 5;
 
     int FlightNumber;
-    char Src[4]; // From
-    char Dst[4]; // To
+    std::string Src; // From
+    std::string Dst; // To
     Date DateDeparture;
     Airline* TheAirline;
-    Passenger* Passengers[MAX_CAPACITY]{};
-    AirCrew* AirCrews[MAX_AIRCREW]{};
+    std::vector<Passenger> Passengers;
+    std::vector<AirCrew> AirCrews;
     Plane* ThePlane{};
 
-    int NumOfPassengers{};
-    int NumOfAirCrew{};
-
 public:
-    Flight(int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane);
-
-    Flight(const Flight& other) = default;
-
-    Flight(Flight&& other) = default;
-
-    ~Flight();
-
-    Flight& operator=(const Flight& other) = default;
-
-    Flight& operator=(Flight&& other) = default;
+    Flight(int flightNumber, const std::string& src, const std::string& dst, Date dateDeparture, Airline* airline, Plane* plane);
 
     int GetFlightNumber() const;
 
@@ -49,28 +34,28 @@ public:
 
     void SetFlightNumber(int flightNumber);
 
-    const char* GetSrc() const;
+    const std::string GetSrc() const;
 
-    void SetSrc(const char* src);
+    void SetSrc(const std::string src);
 
-    const char* GetDst() const;
+    const std::string GetDst() const;
 
-    void SetDst(const char* dst);
+    void SetDst(const std::string dst);
 
     Date GetDateDeparture() const;
 
     void SetDateDeparture(Date dateDeparture);
 
-    Passenger* const* GetPassengers() const;
+    const std::vector<Passenger>& GetPassengers() const;
 
-    AirCrew* const* GetAirCrew() const;
+    const std::vector<AirCrew>&  GetAirCrew() const;
 
     Plane* GetPlane() const;
 
     void SetPlane(Plane* plane);
 
     const Flight& operator+=(const Passenger& passenger); // add passenger to flight
-    const Flight& operator+=(AirCrew* airCrew); // add air crew to flight
+    const Flight& operator+=(const AirCrew& airCrew); // add air crew to flight
     bool operator<(int capacity) const; // check if there are available seats
     bool operator==(const Flight& flight) const; // check if same flight
 

@@ -13,37 +13,27 @@ class Person
 protected:
     static int Counter;
 
-    char FirstName[50];
-    char LastName[50];
+    std::string FirstName;
+    std::string LastName;
     int Id;
     Date BirthDate;
 
 public:
-    Person(const char* firstName, const char* lastName, Date birthDate);
+    Person(const std::string& firstName, const std::string& lastName, Date birthDate);
 
-    Person(const Person& other) = default;
+    void SetFirstName(const std::string& firstName);
 
-    Person(Person&& other) noexcept = default;
-
-    virtual ~Person() = default;
-
-    Person& operator=(const Person& other) = default;
-
-    Person& operator=(Person&& other) noexcept = default;
-
-    void SetFirstName(const char* firstName);
-
-    void SetLastName(const char* lastName);
+    void SetLastName(const std::string& lastName);
 
     void SetId(int id);
 
     void SetBirthDate(int day, int month, int year);
 
-    const char* GetFirstName() const;
+    const std::string& GetFirstName() const;
 
-    const char* GetLastName() const;
+    const std::string& GetLastName() const;
 
-    const char* GetFullName() const;
+    std::string GetFullName() const;
 
     int GetId() const;
 

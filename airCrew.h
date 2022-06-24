@@ -14,16 +14,6 @@ protected:
 public:
     explicit AirCrew(int airlineId);
 
-    AirCrew(const AirCrew& other) = default;
-
-    AirCrew(AirCrew&& other) noexcept = default;
-
-    virtual ~AirCrew() = default;
-
-    AirCrew& operator=(const AirCrew& other) = default;
-
-    AirCrew& operator=(AirCrew&& other) noexcept = default;
-
     int GetAirlineId() const;
 
     virtual void Print(std::ostream& os) const;

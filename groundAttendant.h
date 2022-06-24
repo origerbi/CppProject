@@ -16,19 +16,9 @@ public:
 
     GroundAttendant(Employee&& employee, GroundCrew&& groundCrew);
 
-    GroundAttendant(const GroundAttendant& other) = default;
-
-    GroundAttendant(GroundAttendant&& other) = default;
-
-    ~GroundAttendant() = default;
-
     void SetFlightNumber(int flightNumber);
 
     int GetFlightNumber() const;
-
-    GroundAttendant& operator=(const GroundAttendant& other) = default;
-
-    GroundAttendant& operator=(GroundAttendant&& other) noexcept = default;
 
     friend std::ostream& operator<<(std::ostream& os, const GroundAttendant& groundAttendant);
 };

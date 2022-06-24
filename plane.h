@@ -25,16 +25,6 @@ private:
 public:
     Plane(int id, int maxCapacity, EAircraft theAircraft);
 
-    Plane(const Plane& other) = default;
-
-    Plane(Plane&& other) noexcept = default;
-
-    ~Plane() = default;
-
-    Plane& operator=(const Plane& other) = default;
-
-    Plane& operator=(Plane&& other) = default;
-
     int GetId() const;
 
     void SetId(int id);

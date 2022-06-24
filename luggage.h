@@ -12,16 +12,6 @@ class Luggage
 public:
     Luggage(int id, double weight);
 
-    Luggage(const Luggage& other) = default;
-
-    Luggage(Luggage&& other) noexcept = default;
-
-    ~Luggage() = default;
-
-    Luggage& operator=(const Luggage& other) = default;
-
-    Luggage& operator=(Luggage&& other) = default;
-
     int GetId() const;
 
     void SetId(int id);

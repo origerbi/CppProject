@@ -11,53 +11,35 @@
 
 class Airport
 {
-    static constexpr int MAX_FLIGHTS = 10;
-    static constexpr int MAX_CREW = 10;
 
-    char Iata[4]{}; // IATA- 3 letter airport code (eg. London Heathrow- LHR)
-    char Name[50]{};
-    char City[50]{};
-    Flight* Flights[MAX_FLIGHTS]{};
-    GroundCrew* GroundCrews[MAX_CREW]{};
-    int NumOfFlights{};
-    int NumOfCrew{};
+    std::string Iata; // IATA- 3 letter airport code (eg. London Heathrow- LHR)
+    std::string Name;
+    std::string City;
+    std::vector<Flight> Flights;
+    std::vector<GroundCrew> GroundCrews;
 
 public:
-    Airport(const char* iata, const char* name, const char* city);
+    Airport(const std::string& iata, const std::string& name, const std::string& city);
 
-    Airport(const Airport& other) = default;
+    const std::string& GetIata() const;
 
-    Airport(Airport&& other) = default;
+    void SetIata(const std::string& iata);
 
-    ~Airport();
+    const std::string& GetCity();
+	
+    void SetCity(const std::string& city);
 
-    Airport& operator=(const Airport& other) = default;
+    const std::string& GetName();
 
-    Airport& operator=(Airport&& other) = default;
+    void SetName(const std::string& name);
 
-    const char* GetIata() const;
+    std::vector<Flight>& GetFlights();
 
-    void SetIata(const char* iata);
-
-    char* GetCity();
-
-    void SetCity(const char* city);
-
-    char* GetName();
-
-    void SetName(const char* name);
-
-    Flight* const* GetFlights();
-
-    GroundCrew* const* GetGroundCrew() const;
-
-    int GetNumOfFlights() const;
-
-    int GetNumOfCrew() const;
+    const std::vector<GroundCrew>& GetGroundCrew() const;
 
     bool operator==(const Airport& airport) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Airport& airport);
-    Airport& operator+=(Flight* flight);
+    Airport& operator+=(const Flight& flight);
     Airport& operator+=(const GroundCrew& crew);
 };

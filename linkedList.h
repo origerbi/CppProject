@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <ostream>
+#include <iostream>
 
 template <typename T>
 class LinkedList
@@ -7,26 +7,17 @@ class LinkedList
 public:
     explicit LinkedList<T>(const T& t);
     LinkedList<T>();
-    LinkedList<T>(const LinkedList<T>& other) = default;
-    LinkedList<T>& operator=(const LinkedList<T>& other) = default;
-    LinkedList<T>& operator=(LinkedList<T>&& other) noexcept = default;
-    LinkedList<T>(LinkedList<T>&& other) noexcept = default;
+    LinkedList<T>(const LinkedList<T>& other) = delete;
+    LinkedList<T>& operator=(const LinkedList<T>& other) = delete;
+    LinkedList<T>& operator=(LinkedList<T>&& other) noexcept = delete;
+    LinkedList<T>(LinkedList<T>&& other) noexcept = delete;
     ~LinkedList<T>();
     void AddItem(const T& t);
     bool RemoveItem(int index);
     bool HasNext() const;
     LinkedList<T>* Next;
     T* Value;
-
-    friend std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list)
-    {
-        while (list.Next != nullptr)
-        {
-            os << list.Value << std::endl;
-            list = list.Next;
-        }
-        return os;
-    }
+    void Print();
 };
 
 template <typename T>
@@ -71,7 +62,7 @@ bool LinkedList<T>::RemoveItem(const int index)
     if (index == 0)
     {
         const LinkedList<T>* temp = Next;
-        Next = Next->Next;
+        Next = temp->Next;
         temp->Next = nullptr;
         delete temp;
         return true;
@@ -83,4 +74,17 @@ template <typename T>
 bool LinkedList<T>::HasNext() const
 {
     return Next != nullptr;
+}
+
+template<typename T>
+inline void LinkedList<T>::Print()
+{
+	if (Value != nullptr)
+	{
+		std::cout << *Value << std::endl;
+	}
+	if (Next != nullptr)
+	{
+		Next->Print();
+	}
 }

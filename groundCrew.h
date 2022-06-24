@@ -9,22 +9,12 @@
 class GroundCrew
 {
 protected:
-    const char* AirportId;
+    std::string AirportId;
 
 public:
-    explicit GroundCrew(const char* airportId);
+    explicit GroundCrew(const std::string& airportId);
 
-    GroundCrew(const GroundCrew& other) = default;
-
-    GroundCrew(GroundCrew&& other) noexcept = default;
-
-    ~GroundCrew() = default;
-
-    GroundCrew& operator=(const GroundCrew& other) = default;
-
-    GroundCrew& operator=(GroundCrew&& other) = default;
-
-    const char* GetAirportId() const;
+    const std::string& GetAirportId() const;
 
     friend std::ostream& operator<<(std::ostream& os, const GroundCrew& groundCrew);
 };

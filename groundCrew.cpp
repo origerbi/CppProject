@@ -1,10 +1,10 @@
 ﻿#include "groundCrew.h"
 
-GroundCrew::GroundCrew(const char* airportId) : AirportId(airportId)
+GroundCrew::GroundCrew(const std::string& airportId) : AirportId(airportId)
 {
 }
 
-const char* GroundCrew::GetAirportId() const
+const std::string& GroundCrew::GetAirportId() const
 {
     return AirportId;
 }

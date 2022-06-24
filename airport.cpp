@@ -1,99 +1,63 @@
 ﻿#include "airport.h"
 
-Airport::Airport(const char* iata, const char* name, const char* city)
+Airport::Airport(const std::string& iata, const std::string& name, const std::string& city) : Iata(iata), Name(name), City(city)
 {
-    strcpy_s(Iata, iata);
-    strcpy_s(Name, name);
-    strcpy_s(City, city);
 }
 
-Airport::~Airport()
-{
-    for (int i = 0; i < NumOfFlights; i++)
-    {
-        if (strcmp(Flights[i]->GetSrc(), Iata) == 0)
-        {
-            delete Flights[i];
-        }
-    }
-    for (int i = 0; i < NumOfCrew; i++)
-    {
-        delete GroundCrews[i];
-    }
-}
-
-const char* Airport::GetIata() const
+const std::string& Airport::GetIata() const
 {
     return Iata;
 }
 
-void Airport::SetIata(const char* iata)
+void Airport::SetIata(const std::string& iata)
 {
-    strcpy_s(Iata, iata);
+    Iata = iata;
 }
 
-char* Airport::GetCity()
+const std::string& Airport::GetCity()
 {
     return City;
 }
 
-void Airport::SetCity(const char* city)
+void Airport::SetCity(const std::string& city)
 {
-    strcpy_s(City, city);
+    City = city;
 }
 
-char* Airport::GetName()
+const std::string& Airport::GetName()
 {
     return Name;
 }
 
-void Airport::SetName(const char* name)
+void Airport::SetName(const std::string& name)
 {
-    strcpy_s(Name, name);
+    Name = name;
 }
 
-Flight* const* Airport::GetFlights()
+std::vector<Flight>& Airport::GetFlights()
 {
     return Flights;
 }
 
-GroundCrew* const* Airport::GetGroundCrew() const
+const std::vector<GroundCrew>& Airport::GetGroundCrew() const
 {
     return GroundCrews;
 }
 
-int Airport::GetNumOfFlights() const
-{
-    return NumOfFlights;
-}
-
-int Airport::GetNumOfCrew() const
-{
-    return NumOfCrew;
-}
-
 bool Airport::operator==(const Airport& airport) const
 {
-    return strcmp(Iata, airport.Iata) == 0;
+    return Iata == airport.Iata;
 }
 
-Airport& Airport::operator+=(Flight* flight)
+Airport& Airport::operator+=(const Flight& flight)
 {
-    if (NumOfFlights < MAX_FLIGHTS)
-    {
-        Flights[NumOfFlights] = flight;
-        NumOfFlights++;
-    }
+    Flights.push_back(flight);
     return *this;
 }
 
 Airport& Airport::operator+=(const GroundCrew& crew)
 {
-    if (NumOfCrew < MAX_CREW)
-    {
-        GroundCrews[NumOfCrew] = new GroundCrew(crew);
-        NumOfCrew++;
-    }
+	GroundCrews.push_back(crew);
     return *this;
 }
 
@@ -103,14 +67,12 @@ std::ostream& operator<<(std::ostream& os, const Airport& airport)
     os << "Name: " << airport.Name << std::endl;
     os << "City: " << airport.City << std::endl;
     os << "Flights: " << std::endl;
-    for (int i = 0; i < airport.NumOfFlights; i++)
-    {
-        os << *airport.Flights[i] << std::endl;
+    for (Flight flight : airport.Flights) {
+		os << flight << std::endl;
     }
     os << "Ground Crews: " << std::endl;
-    for (int i = 0; i < airport.NumOfCrew; i++)
-    {
-        os << *airport.GroundCrews[i] << std::endl;
+    for (GroundCrew crew : airport.GroundCrews) {
+        os << crew << std::endl;
     }
     return os;
 }

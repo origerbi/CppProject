@@ -2,7 +2,6 @@
 #include "airportManager.h"
 #include "airport.h"
 #include "date.h"
-#include <iostream>
 
 void AddAirline(AirportManager* pManager);
 
@@ -10,25 +9,23 @@ void AddAirport(AirportManager* pManager);
 
 Employee InitEmployee();
 
-void AddEmployeeAirport(const AirportManager* pManager);
+void AddEmployeeAirport(AirportManager* pManager);
 
-void AddEmployeeAirline(const AirportManager* pManager);
+void AddEmployeeAirline(AirportManager* pManager);
 
-void RegisterFlight(const AirportManager* pManager);
+void RegisterFlight(AirportManager* pManager);
 
-void AssembleCrew(const AirportManager* pManager);
+void AssembleCrew(AirportManager* pManager);
 
 void DisplayFilteredFlights(const AirportManager* pManager);
 
-void DisplayFlights(const AirportManager* pManager);
+void DisplayFlights(AirportManager* pManager);
 
-void AddPassengerToFlight(const AirportManager* pManager);
+void AddPassengerToFlight(AirportManager* pManager);
 
-void DisplayAirports(const AirportManager* pManager);
+void DisplayAirlines(AirportManager* pManager);
 
-void DisplayAirlines(const AirportManager* pManager);
-
-void AddPlaneToAirline(const AirportManager* pManager);
+void AddPlaneToAirline(AirportManager* pManager);
 
 void AssemblePilots(Flight* flight);
 
@@ -132,7 +129,7 @@ void AddAirport(AirportManager* pManager)
 
 void AddAirline(AirportManager* pManager)
 {
-    char name[50];
+    std::string name;
     cout << "Add New Airline\n";
     cout << "Enter airline's name\n";
     cin >> name;
@@ -144,8 +141,8 @@ void AddAirline(AirportManager* pManager)
 
 Employee InitEmployee()
 {
-    char firstName[50];
-    char lastName[50];
+    std::string firstName;
+    std::string lastName;
     int day;
     int month;
     int year;
@@ -167,14 +164,14 @@ Employee InitEmployee()
     return {Person(firstName, lastName, Date(day, month, year)), salary, Date(dayStart, monthStart, yearStart)};
 }
 
-void AddEmployeeAirport(const AirportManager* pManager)
+void AddEmployeeAirport(AirportManager* pManager)
 {
     char code[4];
     cout << "Add employee to airport\n";
     const Employee employee = InitEmployee();
 
     cout << "Choose airport by code\n";
-    DisplayAirports(pManager);
+    pManager->GetAirports()->Print();
     cin >> code;
 
     const GroundAttendant groundAttendant{employee, GroundCrew(code)};
@@ -208,7 +205,7 @@ FlightAttendant* InitFlightAttendant(const Employee& employee, const int airline
     return new FlightAttendant(employee, AirCrew(airlineId), static_cast<FlightAttendant::EFlightAttendantRank>(rank));
 }
 
-void AddEmployeeAirline(const AirportManager* pManager)
+void AddEmployeeAirline(AirportManager* pManager)
 {
     int id;
     int choice;
@@ -250,22 +247,21 @@ void AddEmployeeAirline(const AirportManager* pManager)
     }
 }
 
-void RegisterFlight(const AirportManager* pManager)
+void RegisterFlight(AirportManager* pManager)
 {
-    char airlineName[50];
-
+    std::string airlineName;
     cout << "Register Flight\n";
     cout << "Choose airline by name:\n";
     DisplayAirlines(pManager);
     cin >> airlineName;
     Airline* airline = pManager->FindAirline(airlineName);
-    if (airline != nullptr && airline->GetNumOfPlanes() > 0)
+    if (airline != nullptr && airline->GetPlanes().size() > 0)
     {
         int month;
         int year;
         int day;
-        char dest[4];
-        char src[4];
+        std::string dest;
+        std::string src;
         int flightNumber;
         cout << "Enter flight number\n";
         cin >> flightNumber;
@@ -275,30 +271,33 @@ void RegisterFlight(const AirportManager* pManager)
         cin >> dest;
         cout << "Enter day of departure(day month year)\n";
         cin >> day >> month >> year;
-        Plane* const* planes = airline->GetPlanes();
-        const int numPlanes = airline->GetNumOfPlanes();
+        std::vector<Plane>& planes = airline->GetPlanes();
         cout << "Choose plane\n";
-        for (int i = 0; i < numPlanes; i++)
+        for (int i = 0; i < planes.size(); i++)
         {
-            cout << i << " - " << *planes[i] << endl;
+            cout << i << " - " << planes[i] << endl;
         }
         int planeId;
         cin >> planeId;
-        Plane* plane = planes[planeId];
-        const Flight flight{flightNumber, src, dest, Date(day, month, year), airline, plane};
+        Plane& plane = planes[planeId];
+        const Flight flight(flightNumber, src, dest, Date(day, month, year), airline, &plane);
         if (pManager->RegisterFlight(flight))
         {
-            cout << "Flight registered\n";
+            cout << "Flight registered" << std::endl;
         }
         else
         {
-            cout << "Flight failed to register\n";
+            cout << "Flight failed to register" << std::endl;
         }
+    }
+    else
+    {
+        cout << "No airplanes or airline not found." << std::endl;
     }
 }
 
 
-void AddPassengerToFlight(const AirportManager* pManager)
+void AddPassengerToFlight(AirportManager* pManager)
 {
     char firstName[50];
     char lastName[50];
@@ -324,7 +323,7 @@ void AddPassengerToFlight(const AirportManager* pManager)
     cout << "success: " << pManager->AddPassengerToFlight(p, flightNumber) << endl;
 }
 
-void AssembleCrew(const AirportManager* pManager)
+void AssembleCrew(AirportManager* pManager)
 {
     int flightNumber;
     cout << "Choose flight to assign crew\n";
@@ -361,65 +360,58 @@ void DisplayFlights(AirportManager* pManager)
     LinkedList<Airport>* temp = pManager->GetAirports();
     do
     {
-        
-    }
-    while (temp->HasNext());
-    for (int i = 0; i < pManager->GetNumOfAirports(); ++i)
-    {
-        Flight* const* flights = pManager->GetAirports()[i]->GetFlights();
-        const int numFlights = pManager->GetAirports()[i]->GetNumOfFlights();
-        for (int j = 0; j < numFlights; ++j)
+        temp = temp->Next;
+        const std::vector<Flight>& flights = temp->Value->GetFlights();
+        for (const Flight& f : flights)
         {
-            cout << *flights[j] << endl;
+            cout << f << endl;
         }
     }
+    while (temp->HasNext());
 }
 
-void DisplayAirports(const AirportManager* pManager)
+void DisplayAirlines(AirportManager* pManager)
 {
-    for (int i = 0; i < pManager->GetNumOfAirports(); ++i)
+    for (Airline& airline : pManager->GetAirlines())
     {
-        cout << i << " - " << *pManager->GetAirports()[i] << endl;
+        cout << airline << endl;
     }
 }
 
-void DisplayAirlines(const AirportManager* pManager)
+void AddPlaneToAirline(AirportManager* pManager)
 {
-    for (int i = 0; i < pManager->GetNumOfAirlines(); ++i)
-    {
-        cout << i << " - " << *pManager->GetAirlines()[i] << endl;
-    }
-}
-
-void AddPlaneToAirline(const AirportManager* pManager)
-{
-    Airline* const* airlines = pManager->GetAirlines();
+    std::vector<Airline>& airlines = pManager->GetAirlines();
     cout << "Choose airline:\n";
-    for (int i = 0; i < pManager->GetNumOfAirlines(); i++)
+    for (int i = 0; i < airlines.size(); i++)
     {
-        cout << i << " - " << *airlines[i] << endl;
+        cout << i << " - " << airlines[i] << endl;
     }
     int airlineId;
     cin >> airlineId;
-    Airline* airline = airlines[airlineId];
-    if (airline != nullptr)
+    try
     {
-        cout << "Enter plane ID\n";
+        Airline& airline = airlines[airlineId];
+        cout << "Enter plane ID (number)\n";
         int planeId;
         cin >> planeId;
         cout << "Enter plane capacity\n";
         int capacity;
         cin >> capacity;
         const Plane::EAircraft type = GetAircraftTypeFromUser();
-        *airline += Plane(planeId, capacity, type);
+        airline += Plane(planeId, capacity, type);
     }
+    catch (std::out_of_range&)
+    {
+		cout << "Airline not found\n";
+    }
+
 }
 
 void AssemblePilots(Flight* flight)
 {
     int result;
-    Pilot* const* pilots = flight->GetAirline()->GetPilots();
-    const int numPilots = flight->GetAirline()->GetNumPilots();
+    std::vector<Pilot>& pilots = flight->GetAirline()->GetPilots();
+    const size_t numPilots = pilots.size();
     auto* chosenNumbers = new int[static_cast<size_t>(numPilots)];
     int counter = 0;
     do
@@ -427,9 +419,9 @@ void AssemblePilots(Flight* flight)
         cout << "Choose pilots to assign, press -1 to continue\n";
         for (int i = 0; i < numPilots; i++)
         {
-            if (pilots[i]->GetAvailability())
+            if (pilots[i].GetAvailability())
             {
-                cout << i << " - " << *pilots[i] << endl;
+                cout << i << " - " << pilots[i] << endl;
             }
         }
         cin >> result;
@@ -447,9 +439,9 @@ void AssemblePilots(Flight* flight)
                 break;
             }
         }
-        if (!found && result != -1 && pilots[result]->GetAvailability())
+        if (!found && result != -1 && pilots[result].GetAvailability())
         {
-            pilots[result]->SetAvailability(false);
+            pilots[result].SetAvailability(false);
             counter++;
             chosenNumbers[counter - 1] = result;
         }
@@ -469,23 +461,22 @@ void AssemblePilots(Flight* flight)
 void AssembleFlightAttendants(Flight* flight)
 {
     int result;
-    FlightAttendant* const* flightAttendants = flight->GetAirline()->GetFlightAttendants();
-    const int numFlightAttendants = flight->GetAirline()->GetNumFlightAttendants();
-    auto* chosenNumbers = new int[static_cast<size_t>(numFlightAttendants)];
+    std::vector<FlightAttendant>& flightAttendants = flight->GetAirline()->GetFlightAttendants();
+    auto* chosenNumbers = new int[flightAttendants.size()];
     int counter = 0;
     do
     {
         cout << "Choose flight attendants to assign, press -1 to continue\n";
-        for (int i = 0; i < numFlightAttendants; i++)
+        for (int i = 0; i < flightAttendants.size(); i++)
         {
-            if (flightAttendants[i]->GetAvailability())
+            if (flightAttendants[i].GetAvailability())
             {
-                cout << i << " - " << *flightAttendants[i] << endl;
+                cout << i << " - " << flightAttendants[i] << endl;
             }
         }
         cin >> result;
         bool found = false;
-        if (result < -1 || result >= numFlightAttendants)
+        if (result < -1 || result >= flightAttendants.size())
         {
             cout << "Invalid input\n";
             continue;
@@ -498,9 +489,9 @@ void AssembleFlightAttendants(Flight* flight)
                 break;
             }
         }
-        if (!found && result != -1 && flightAttendants[result]->GetAvailability())
+        if (!found && result != -1 && flightAttendants[result].GetAvailability())
         {
-            flightAttendants[result]->SetAvailability(false);
+            flightAttendants[result].SetAvailability(false);
             counter++;
             chosenNumbers[counter - 1] = result;
         }

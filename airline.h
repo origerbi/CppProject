@@ -9,58 +9,36 @@
 #include "pilot.h"
 #include "plane.h"
 #include <iostream>
+#include <vector>
 
 class Airline
 {
-    static constexpr int MAX_PLANES = 10;
-    static constexpr int MAX_PILOTS = 10;
-    static constexpr int MAX_CREW = 15;
     static int Counter;
 
     int Id{};
-    char Name[50];
-    Plane* Planes[MAX_PLANES]{};
-    Pilot* Pilots[MAX_PILOTS]{};
-    FlightAttendant* FlightAttendants[MAX_CREW]{};
-
-    int NumOfPlanes{};
-    int NumOfPilots{};
-    int NumOfFlightAttendants{};
+    std::string Name;
+    std::vector<Plane> Planes;
+    std::vector<Pilot> Pilots;
+    std::vector<FlightAttendant> FlightAttendants;
 
 public:
-    explicit Airline(const char* name);
-
-    Airline(const Airline& other) = default;
-
-    Airline(Airline&& other) = default;
-
-    ~Airline();
-
-    Airline& operator=(const Airline& other) = default;
-
-    Airline& operator=(Airline&& other) = default;
+    explicit Airline(std::string& name);
 
     int GetId() const;
 
-    const char* GetName() const;
+    const std::string& GetName() const;
 
-    void SetName(const char* name);
+    void SetName(const std::string& name);
 
-    Plane* const* GetPlanes() const;
+    std::vector<Plane>& GetPlanes();
 
-    Pilot* const* GetPilots() const;
+    std::vector<Pilot>& GetPilots();
 
-    FlightAttendant* const* GetFlightAttendants() const;
-
-    int GetNumOfPlanes() const;
-
-    int GetNumPilots() const;
-
-    int GetNumFlightAttendants() const;
+    std::vector<FlightAttendant>& GetFlightAttendants();
 
     const Airline& operator+=(const Plane& plane); // add plane to airline
     const Airline& operator+=(const Pilot& pilot); // add pilot to flight
-    const Airline& operator+=(const FlightAttendant& flightAttendants); // add flight attendant to flight
+    const Airline& operator+=(const FlightAttendant& flightAttendant); // add flight attendant to flight
 
-    friend std::ostream& operator<<(std::ostream& os, const Airline& airline);
+    friend std::ostream& operator<<(std::ostream& os, Airline& airline);
 };

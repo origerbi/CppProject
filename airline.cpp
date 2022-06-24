@@ -2,25 +2,8 @@
 
 int Airline::Counter = 0;
 
-Airline::Airline(const char* name) : Id(Counter++), Name()
+Airline::Airline(std::string& name) : Id(Counter++), Name(name)
 {
-    strcpy_s(Name, name);
-}
-
-Airline::~Airline()
-{
-    for (int i = 0; i < NumOfPlanes; i++)
-    {
-        delete Planes[i];
-    }
-    for (int i = 0; i < NumOfPilots; i++)
-    {
-        delete Pilots[i];
-    }
-    for (int i = 0; i < NumOfFlightAttendants; i++)
-    {
-        delete FlightAttendants[i];
-    }
 }
 
 int Airline::GetId() const
@@ -28,91 +11,67 @@ int Airline::GetId() const
     return Id;
 }
 
-const char* Airline::GetName() const
+const std::string& Airline::GetName() const
 {
     return Name;
 }
 
-void Airline::SetName(const char* name)
+void Airline::SetName(const std::string& name)
 {
-    strcpy_s(Name, name);
+    Name = name;
 }
 
-Plane* const* Airline::GetPlanes() const
+std::vector<Plane>& Airline::GetPlanes()
 {
     return Planes;
 }
 
-Pilot* const* Airline::GetPilots() const
+std::vector<Pilot>& Airline::GetPilots()
 {
     return Pilots;
 }
 
-FlightAttendant* const* Airline::GetFlightAttendants() const
+std::vector<FlightAttendant>& Airline::GetFlightAttendants()
 {
     return FlightAttendants;
 }
 
-int Airline::GetNumOfPlanes() const
-{
-    return NumOfPlanes;
-}
-
-int Airline::GetNumPilots() const
-{
-    return NumOfPilots;
-}
-
-int Airline::GetNumFlightAttendants() const
-{
-    return NumOfFlightAttendants;
-}
-
 const Airline& Airline::operator+=(const Plane& plane)
 {
-    if (NumOfPlanes < MAX_PLANES)
-    {
-        Planes[NumOfPlanes++] = new Plane(plane);
-    }
+    Planes.push_back(plane);
     return *this;
 }
 
 const Airline& Airline::operator+=(const Pilot& pilot)
 {
-    if (NumOfPilots < MAX_PILOTS)
-    {
-        Pilots[NumOfPilots++] = new Pilot(pilot);
-    }
+    Pilots.push_back(pilot);
     return *this;
 }
 
-const Airline& Airline::operator+=(const FlightAttendant& flightAttendants)
+const Airline& Airline::operator+=(const FlightAttendant& flightAttendant)
 {
-    if (NumOfFlightAttendants < MAX_CREW)
-    {
-        FlightAttendants[NumOfFlightAttendants++] = new FlightAttendant(flightAttendants);
-    }
+    FlightAttendants.push_back(flightAttendant);
     return *this;
 }
 
-std::ostream& operator<<(std::ostream& os, const Airline& airline)
+std::ostream& operator<<(std::ostream& os, Airline& airline)
 {
     os << "Airline: " << airline.GetName() << std::endl;
     os << "Id: " << airline.GetId() << std::endl;
     os << "Planes: " << std::endl;
-    for (int i = 0; i < airline.NumOfPlanes; i++)
+    for (const Plane& plane : airline.GetPlanes())
     {
-        os << *airline.Planes[i] << std::endl;
+        os << plane << std::endl;
     }
     os << "Pilots: " << std::endl;
-    for (int i = 0; i < airline.NumOfPilots; i++)
-    {
-        os << *airline.Pilots[i] << std::endl;
-    }
+	for (const Pilot& pilot : airline.GetPilots())
+	{
+		os << pilot << std::endl;
+	}
     os << "Flight Attendants: " << std::endl;
-    for (int i = 0; i < airline.NumOfFlightAttendants; i++)
-    {
-        os << *airline.FlightAttendants[i] << std::endl;
-    }
+	for (const FlightAttendant& flightAttendant : airline.GetFlightAttendants())
+	{
+		os << flightAttendant << std::endl;
+	}
     return os;
 }

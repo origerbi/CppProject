@@ -18,11 +18,11 @@ const AirportManager& AirportManager::operator+=(const Airport& airport)
 
 const AirportManager& AirportManager::operator+=(const Airline& airline)
 {
-    Airlines.emplace_back(airline);
+    Airlines.push_back(airline);
     return *this;
 }
 
-Airport* AirportManager::FindAirportByCode(const char* code) const
+Airport* AirportManager::FindAirportByCode(const std::string& code) const
 {
     const LinkedList<Airport>* temp = &Airports;
     if (!temp->HasNext())
@@ -32,7 +32,7 @@ Airport* AirportManager::FindAirportByCode(const char* code) const
     do
     {
         temp = temp->Next;
-        if (strcmp(temp->Value->GetIata(), code) == 0)
+        if (temp->Value->GetIata() == code)
         {
             return temp->Value;
         }
@@ -41,30 +41,27 @@ Airport* AirportManager::FindAirportByCode(const char* code) const
     return nullptr;
 }
 
-Airline* AirportManager::FindAirline(const char* name) const
+Airline* AirportManager::FindAirline(const std::string& name)
 {
-    for (auto iterator = Airlines.begin(); iterator != Airlines.end(); ++iterator)
-    {
-        if (strcmp(iterator->GetName(), name) == 0)
+	for (auto& airline : Airlines) {
+        if (airline.GetName() == name)
         {
-            return iterator._Ptr;
+            return &airline;
         }
     }
     return nullptr;
 }
 
-void AirportManager::DisplayFilteredFlights(const char* src, const char* dest) const
+void AirportManager::DisplayFilteredFlights(const std::string& src, const std::string& dest) const
 {
     Airport* srcAirport = FindAirportByCode(src);
     if (srcAirport != nullptr)
     {
-        Flight* const* flights = srcAirport->GetFlights();
-        const int numFlights = srcAirport->GetNumOfFlights();
-        for (int i = 0; i < numFlights; i++)
-        {
-            if (strcmp(flights[i]->GetDst(), dest) == 0)
+        const std::vector<Flight>& flights = srcAirport->GetFlights();
+		for (auto& flight : flights) {
+            if (flight.GetDst() == dest)
             {
-                std::cout << *flights[i] << std::endl;
+                std::cout << flight << std::endl;
             }
         }
     }
@@ -76,9 +73,8 @@ bool AirportManager::RegisterFlight(const Flight& flight) const
     Airport* destAirport = FindAirportByCode(flight.GetDst());
     if (srcAirport != nullptr && destAirport != nullptr)
     {
-        auto* const f = new Flight(flight);
-        *srcAirport += f;
-        *destAirport += f;
+        *srcAirport += flight;
+        *destAirport += flight;
         return true;
     }
     return false;
@@ -95,13 +91,11 @@ bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int 
     {
         temp = temp->Next;
         Airport* airport = temp->Value;
-        Flight* const* flights = airport->GetFlights();
-        for (int j = 0; j < airport->GetNumOfFlights(); j++)
-        {
-            Flight* flight = flights[j];
-            if (flight->GetFlightNumber() == flightNumber)
+        std::vector<Flight>& flights = airport->GetFlights();
+		for (Flight& flight : flights) {
+            if (flight.GetFlightNumber() == flightNumber)
             {
-                *flight += passenger;
+                flight += passenger;
                 return true;
             }
         }
@@ -110,7 +104,7 @@ bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int 
     return false;
 }
 
-bool AirportManager::AddEmployeeToAirport(const GroundAttendant& employee, const char* code) const
+bool AirportManager::AddEmployeeToAirport(const GroundAttendant& employee, const std::string& code) const
 {
     Airport* airport = FindAirportByCode(code);
     if (airport == nullptr)
@@ -158,13 +152,11 @@ Flight* AirportManager::FindFlight(const int flightNumber) const
     {
         temp = temp->Next;
         Airport* airport = temp->Value;
-        Flight* const* flights = airport->GetFlights();
-        for (int j = 0; j < airport->GetNumOfFlights(); j++)
-        {
-            Flight* flight = flights[j];
-            if (flight->GetFlightNumber() == flightNumber)
+        std::vector<Flight> flights = airport->GetFlights();
+		for (auto& flight : flights) {
+            if (flight.GetFlightNumber() == flightNumber)
             {
-                return flight;
+                return &flight;
             }
         }
     }

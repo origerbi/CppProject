@@ -21,18 +21,6 @@ class AirportManager
     std::vector<Airline> Airlines;
 
 public:
-    AirportManager() = default;
-
-    AirportManager(const AirportManager& other) = default;
-
-    AirportManager(AirportManager&& other) = default;
-
-    AirportManager& operator=(const AirportManager& other) = default;
-
-    AirportManager& operator=(AirportManager&& other) = default;
-
-    ~AirportManager() = default;
-
     LinkedList<Airport>* GetAirports();
 
     std::vector<Airline>& GetAirlines();
@@ -40,23 +28,21 @@ public:
     const AirportManager& operator+=(const Airport& airport); // add airport to airport manager
     const AirportManager& operator+=(const Airline& airline); // add airline to airport manager
 
-    Airport* FindAirportByCode(const char* code) const;
+    Airport* FindAirportByCode(const std::string& code) const;
 
-    Airline* FindAirline(const char* name) const;
+    Airline* FindAirline(const std::string& name);
 
-    void DisplayFilteredFlights(const char* src, const char* dest) const;
+    void DisplayFilteredFlights(const std::string& src, const std::string& dest) const;
 
     bool RegisterFlight(const Flight& flight) const;
 
     bool AddPassengerToFlight(const Passenger& passenger, int flightNumber) const;
 
-    bool AddEmployeeToAirport(const GroundAttendant& employee, const char* code) const;
+    bool AddEmployeeToAirport(const GroundAttendant& employee, const std::string& code) const;
 
     bool AddPilotToAirline(const Pilot& employee, int id) const;
 
     bool AddFlightAttendantToAirline(const FlightAttendant& employee, int id) const;
 
     Flight* FindFlight(int flightNumber) const;
-
-    friend std::ostream& operator<<(std::ostream& os, const AirportManager& airportManager);
 };

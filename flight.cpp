@@ -1,19 +1,10 @@
 ﻿#include "flight.h"
 
-Flight::Flight(const int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src{},
-    Dst{}, DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
+Flight::Flight(const int flightNumber, const std::string& src, const std::string& dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src(src),
+    Dst(dst), DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
 {
-    strcpy_s(Src, src);
-    strcpy_s(Dst, dst);
 }
 
-Flight::~Flight()
-{
-    for (int i = 0; i < NumOfPassengers; i++)
-    {
-        delete Passengers[i];
-    }
-}
 
 int Flight::GetFlightNumber() const
 {
@@ -30,24 +21,24 @@ void Flight::SetFlightNumber(const int flightNumber)
     FlightNumber = flightNumber;
 }
 
-const char* Flight::GetSrc() const
+const std::string Flight::GetSrc() const
 {
     return Src;
 }
 
-void Flight::SetSrc(const char* src)
+void Flight::SetSrc(const std::string src)
 {
-    strcpy_s(Src, src);
+    Src = src;
 }
 
-const char* Flight::GetDst() const
+const std::string Flight::GetDst() const
 {
     return Dst;
 }
 
-void Flight::SetDst(const char* dst)
+void Flight::SetDst(const std::string dst)
 {
-    strcpy_s(Dst, dst);
+    Dst = dst;
 }
 
 Date Flight::GetDateDeparture() const
@@ -60,12 +51,12 @@ void Flight::SetDateDeparture(const Date dateDeparture)
     DateDeparture = dateDeparture;
 }
 
-Passenger* const* Flight::GetPassengers() const
+const std::vector<Passenger>& Flight::GetPassengers() const
 {
     return Passengers;
 }
 
-AirCrew* const* Flight::GetAirCrew() const
+const std::vector<AirCrew>& Flight::GetAirCrew() const
 {
     return AirCrews;
 }
@@ -82,27 +73,19 @@ void Flight::SetPlane(Plane* plane)
 
 const Flight& Flight::operator+=(const Passenger& passenger)
 {
-    if (NumOfPassengers < MAX_CAPACITY)
-    {
-        Passengers[NumOfPassengers] = new Passenger(passenger);
-        NumOfPassengers++;
-    }
+	Passengers.push_back(passenger);
     return *this;
 }
 
-const Flight& Flight::operator+=(AirCrew* airCrew)
+const Flight& Flight::operator+=(const AirCrew& airCrew)
 {
-    if (NumOfAirCrew < MAX_AIRCREW)
-    {
-        AirCrews[NumOfAirCrew] = airCrew;
-        NumOfAirCrew++;
-    }
+    AirCrews.push_back(airCrew);
     return *this;
 }
 
 bool Flight::operator<(const int capacity) const
 {
-    return NumOfPassengers < capacity;
+    return Passengers.size() < capacity;
 }
 
 bool Flight::operator==(const Flight& flight) const
@@ -118,14 +101,14 @@ std::ostream& operator<<(std::ostream& os, const Flight& flight)
     os << "Date of departure: " << flight.GetDateDeparture() << std::endl;
     os << "Plane: " << *flight.GetPlane() << std::endl;
     os << "Passengers: " << std::endl;
-    for (int i = 0; i < flight.NumOfPassengers; i++)
+    for (const Passenger& passenger : flight.GetPassengers())
     {
-        os << *flight.Passengers[i] << std::endl;
+        os << passenger << std::endl;
     }
     os << "Air crew: " << std::endl;
-    for (int i = 0; i < flight.NumOfAirCrew; i++)
+    for (const AirCrew& airCrew : flight.GetAirCrew())
     {
-        os << *flight.AirCrews[i] << std::endl;
+        os << airCrew << std::endl;
     }
     return os;
 }

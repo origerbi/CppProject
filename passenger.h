@@ -22,12 +22,12 @@ public:
 
     Passenger(Passenger&& other) noexcept = default;
 
-    ~Passenger() override;
+    ~Passenger();
 
-    Passenger& operator=(const Passenger& other) = default;
+    Passenger& operator=(const Passenger& other) = delete;
 
-    Passenger& operator=(Passenger&& other) noexcept = default;
-
+    Passenger& operator=(Passenger&& other) noexcept = delete;
+	
     void SetFlightNumber(int flightNumber);
 
     void SetLuggage(const Luggage& luggage) const;

@@ -22,10 +22,6 @@ public:
 
     Employee(const Employee& other);
 
-    Employee(Employee&& other) noexcept = default;
-
-    ~Employee() override = default;
-
     void SetSalary(double salary);
 
     void SetAvailability(bool availability);
@@ -37,10 +33,6 @@ public:
     Date GetStartDate() const;
 
     bool GetAvailability() const;
-
-    Employee& operator=(const Employee& other) = default;
-
-    Employee& operator=(Employee&& other) noexcept = default;
 
     friend std::ostream& operator<<(std::ostream& os, const Employee& employee);
 

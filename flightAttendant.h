@@ -24,19 +24,9 @@ public:
 
     FlightAttendant(Employee&& employee, AirCrew&& airCrew, EFlightAttendantRank flightAttendantRank);
 
-    FlightAttendant(const FlightAttendant& other) = default;
-
-    ~FlightAttendant() override = default;
-
-    FlightAttendant(FlightAttendant&& other) noexcept = default;
-
     void SetAttendantRank(EFlightAttendantRank flightAttendantRank);
 
     EFlightAttendantRank GetAttendantRank() const;
-
-    FlightAttendant& operator=(const FlightAttendant& other) = default;
-
-    FlightAttendant& operator=(FlightAttendant&& other) noexcept = default;
 
     void Print(std::ostream& os) const override;
 
