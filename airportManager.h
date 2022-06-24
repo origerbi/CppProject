@@ -19,6 +19,12 @@ class AirportManager
 {
     LinkedList<Airport> Airports;
     std::vector<Airline> Airlines;
+    static AirportManager* instance;
+    AirportManager() = default;
+	AirportManager(AirportManager& other) = delete;
+	AirportManager(AirportManager&& other) = delete;
+	AirportManager& operator=(AirportManager& other) = delete;
+	AirportManager& operator=(AirportManager&& other) = delete;
 
 public:
     LinkedList<Airport>* GetAirports();
@@ -45,4 +51,6 @@ public:
     bool AddFlightAttendantToAirline(const FlightAttendant& employee, int id) const;
 
     Flight* FindFlight(int flightNumber) const;
+
+	static AirportManager* GetInstance();
 };

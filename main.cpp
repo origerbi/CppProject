@@ -59,7 +59,7 @@ int Menu()
 
 int main() // NOLINT(bugprone-exception-escape)
 {
-    AirportManager manager{};
+    AirportManager* manager = AirportManager::GetInstance();
     bool ok = false;
 
     do
@@ -68,34 +68,34 @@ int main() // NOLINT(bugprone-exception-escape)
         switch (option)
         {
         case 1:
-            AddAirport(&manager);
+            AddAirport(manager);
             break;
         case 2:
-            AddAirline(&manager);
+            AddAirline(manager);
             break;
         case 3:
-            AddEmployeeAirport(&manager);
+            AddEmployeeAirport(manager);
             break;
         case 4:
-            AddEmployeeAirline(&manager);
+            AddEmployeeAirline(manager);
             break;
         case 5:
-            RegisterFlight(&manager);
+            RegisterFlight(manager);
             break;
         case 6:
-            AddPassengerToFlight(&manager);
+            AddPassengerToFlight(manager);
             break;
         case 7:
-            AssembleCrew(&manager);
+            AssembleCrew(manager);
             break;
         case 8:
-            DisplayFilteredFlights(&manager);
+            DisplayFilteredFlights(manager);
             break;
         case 9:
-            DisplayFlights(&manager);
+            DisplayFlights(manager);
             break;
         case 10:
-            AddPlaneToAirline(&manager);
+            AddPlaneToAirline(manager);
             break;
         case 11: // exit
             ok = true;

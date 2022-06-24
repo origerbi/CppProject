@@ -1,5 +1,7 @@
 ﻿#include "airportManager.h"
 
+AirportManager* AirportManager::instance = nullptr;
+
 LinkedList<Airport>* AirportManager::GetAirports()
 {
     return &Airports;
@@ -162,4 +164,13 @@ Flight* AirportManager::FindFlight(const int flightNumber) const
     }
     while (temp->HasNext());
     return nullptr;
+}
+
+AirportManager* AirportManager::GetInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new AirportManager();
+	}
+    return instance;
 }
