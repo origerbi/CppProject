@@ -1,6 +1,6 @@
 ﻿#include "plane.h"
 
-Plane::Plane(const int id, const int maxCapacity, const EAircraft theAircraft) : Id(id), MaxCapacity(maxCapacity), TheAircraft(theAircraft)
+Plane::Plane(int id, int maxCapacity, EAircraft theAircraft) : Id(id), MaxCapacity(maxCapacity), TheAircraft(theAircraft)
 {
 }
 
@@ -9,7 +9,7 @@ int Plane::GetId() const
     return Id;
 }
 
-void Plane::SetId(const int id)
+void Plane::SetId(int id)
 {
     Id = id;
 }
@@ -19,7 +19,7 @@ int Plane::GetMaxCapacity() const
     return MaxCapacity;
 }
 
-void Plane::SetMaxCapacity(const int maxCapacity)
+void Plane::SetMaxCapacity(int maxCapacity)
 {
     MaxCapacity = maxCapacity;
 }
@@ -29,7 +29,7 @@ Plane::EAircraft Plane::GetTheAircraft() const
     return TheAircraft;
 }
 
-void Plane::SetTheAircraft(const EAircraft theAircraft)
+void Plane::SetTheAircraft(EAircraft theAircraft)
 {
     TheAircraft = theAircraft;
 }

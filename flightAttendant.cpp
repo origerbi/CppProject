@@ -1,15 +1,15 @@
 ﻿#include "flightAttendant.h"
 
 FlightAttendant::FlightAttendant(const Employee& employee, const AirCrew& airCrew,
-                                 const EFlightAttendantRank flightAttendantRank) : Person(employee.GetFirstName(), employee.GetLastName(), employee.GetBirthDate()), Employee(employee), AirCrew(airCrew), FlightAttendantRank(flightAttendantRank)
+                                 EFlightAttendantRank flightAttendantRank) : Person(employee.GetFirstName(), employee.GetLastName(), employee.GetBirthDate()), Employee(employee), AirCrew(airCrew), FlightAttendantRank(flightAttendantRank)
 {
 }
 
-FlightAttendant::FlightAttendant(Employee&& employee, AirCrew&& airCrew, const EFlightAttendantRank flightAttendantRank) : FlightAttendant(employee, airCrew, flightAttendantRank)
+FlightAttendant::FlightAttendant(Employee&& employee, AirCrew&& airCrew, EFlightAttendantRank flightAttendantRank) : FlightAttendant(employee, airCrew, flightAttendantRank)
 {
 }
 
-void FlightAttendant::SetAttendantRank(const EFlightAttendantRank flightAttendantRank)
+void FlightAttendant::SetAttendantRank(EFlightAttendantRank flightAttendantRank)
 {
     FlightAttendantRank = flightAttendantRank;
 }

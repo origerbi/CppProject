@@ -19,12 +19,12 @@ void Person::SetLastName(const char* lastName)
     strcpy_s(LastName, lastName);
 }
 
-void Person::SetId(const int id)
+void Person::SetId(int id)
 {
     Id = id;
 }
 
-void Person::SetBirthDate(const int day, const int month, const int year)
+void Person::SetBirthDate(int day, int month, int year)
 {
     BirthDate = Date(day, month, year);
 }

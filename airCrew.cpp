@@ -1,6 +1,6 @@
 ﻿#include "airCrew.h"
 
-AirCrew::AirCrew(const int airlineId) : AirlineId(airlineId)
+AirCrew::AirCrew(int airlineId) : AirlineId(airlineId)
 {
 }
 

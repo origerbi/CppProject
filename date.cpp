@@ -1,13 +1,13 @@
 ﻿// ReSharper disable CppClangTidyBugproneNarrowingConversions
 #include "date.h"
 
-Date::Date(const int day, const int month, const int year) : Day(day), Month(month), Year(year)
+Date::Date(int day, int month, int year) : Day(day), Month(month), Year(year)
 {
 }
 
 const char* Date::GetDate(const Date& date)
 {
-    const auto dateString = new char[11];
+    auto* const dateString = new char[11];
     dateString[0] = date.Day / 10 + '0';
     dateString[1] = date.Day % 10 + '0';
     dateString[2] = '/';

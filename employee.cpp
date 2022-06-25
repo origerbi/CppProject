@@ -1,11 +1,11 @@
 ﻿#include "employee.h"
 
-Employee::Employee(const Person& base, const double salary, const Date startDate, const bool isAvailable) : Person(base), EmployeeId(),
+Employee::Employee(const Person& base, double salary, Date startDate, bool isAvailable) : Person(base), EmployeeId(),
     Salary(salary), StartDate(startDate), IsAvailable(isAvailable)
 {
 }
 
-Employee::Employee(Person&& base, const int employeeId, const double salary, const Date startDate, const bool isAvailable) : Person(base), EmployeeId(employeeId),
+Employee::Employee(Person&& base, int employeeId, double salary, Date startDate, bool isAvailable) : Person(base), EmployeeId(employeeId),
     Salary(salary), StartDate(startDate), IsAvailable(isAvailable)
 {
 }
@@ -15,12 +15,12 @@ Employee::Employee(const Employee& other) : Person(other.GetFirstName(), other.G
 {
 }
 
-void Employee::SetSalary(const double salary)
+void Employee::SetSalary(double salary)
 {
     Salary = salary;
 }
 
-void Employee::SetAvailability(const bool availability)
+void Employee::SetAvailability(bool availability)
 {
     IsAvailable = availability;
 }

@@ -1,6 +1,6 @@
 ﻿#include "luggage.h"
 
-Luggage::Luggage(const int id, const double weight) : Id(id), Weight(weight)
+Luggage::Luggage(int id, double weight) : Id(id), Weight(weight)
 {
 }
 
@@ -9,7 +9,7 @@ int Luggage::GetId() const
     return Id;
 }
 
-void Luggage::SetId(const int id)
+void Luggage::SetId(int id)
 {
     Id = id;
 }
@@ -19,7 +19,7 @@ double Luggage::GetWeight() const
     return Weight;
 }
 
-void Luggage::SetWeight(const double weight)
+void Luggage::SetWeight(double weight)
 {
     Weight = weight;
 }

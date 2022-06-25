@@ -1,6 +1,6 @@
 ﻿#include "flight.h"
 
-Flight::Flight(const int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src{},
+Flight::Flight(int flightNumber, const char* src, const char* dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src{},
     Dst{}, DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
 {
     strcpy_s(Src, src);
@@ -25,7 +25,7 @@ Airline* Flight::GetAirline() const
     return TheAirline;
 }
 
-void Flight::SetFlightNumber(const int flightNumber)
+void Flight::SetFlightNumber(int flightNumber)
 {
     FlightNumber = flightNumber;
 }
@@ -55,7 +55,7 @@ Date Flight::GetDateDeparture() const
     return DateDeparture;
 }
 
-void Flight::SetDateDeparture(const Date dateDeparture)
+void Flight::SetDateDeparture(Date dateDeparture)
 {
     DateDeparture = dateDeparture;
 }
@@ -100,7 +100,7 @@ const Flight& Flight::operator+=(AirCrew* airCrew)
     return *this;
 }
 
-bool Flight::operator<(const int capacity) const
+bool Flight::operator<(int capacity) const
 {
     return NumOfPassengers < capacity;
 }

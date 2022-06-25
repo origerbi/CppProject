@@ -107,7 +107,7 @@ bool AirportManager::RegisterFlight(const Flight& flight) const
     return false;
 }
 
-bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int flightNumber) const
+bool AirportManager::AddPassengerToFlight(const Passenger& passenger, int flightNumber) const
 {
     for (int i = 0; i < NumOfAirports; i++)
     {
@@ -139,7 +139,7 @@ bool AirportManager::AddEmployeeToAirport(const GroundAttendant& employee, const
     return false;
 }
 
-bool AirportManager::AddPilotToAirline(const Pilot& employee, const int id) const
+bool AirportManager::AddPilotToAirline(const Pilot& employee, int id) const
 {
     for (int i = 0; i < NumOfAirlines; i++)
     {
@@ -152,7 +152,7 @@ bool AirportManager::AddPilotToAirline(const Pilot& employee, const int id) cons
     return false;
 }
 
-bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee, const int id) const
+bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee, int id) const
 {
     for (int i = 0; i < NumOfAirlines; i++)
     {
@@ -165,7 +165,7 @@ bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee
     return false;
 }
 
-Flight* AirportManager::FindFlight(const int flightNumber) const
+Flight* AirportManager::FindFlight(int flightNumber) const
 {
     for (int i = 0; i < NumOfAirports; i++)
     {

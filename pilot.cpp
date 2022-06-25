@@ -1,14 +1,14 @@
 ﻿#include "pilot.h"
 
-Pilot::Pilot(const Employee& employee, const AirCrew& airCrew, const EPilotRank pilotRank) : Person(employee.GetFirstName(), employee.GetLastName(), employee.GetBirthDate()), Employee(employee), AirCrew(airCrew), PilotRank(pilotRank)
+Pilot::Pilot(const Employee& employee, const AirCrew& airCrew, EPilotRank pilotRank) : Person(employee.GetFirstName(), employee.GetLastName(), employee.GetBirthDate()), Employee(employee), AirCrew(airCrew), PilotRank(pilotRank)
 {
 }
 
-Pilot::Pilot(Employee&& employee, AirCrew&& airCrew, const EPilotRank pilotRank) : Pilot(employee, airCrew, pilotRank)
+Pilot::Pilot(Employee&& employee, AirCrew&& airCrew, EPilotRank pilotRank) : Pilot(employee, airCrew, pilotRank)
 {
 }
 
-void Pilot::SetPilotRank(const EPilotRank pilotRank)
+void Pilot::SetPilotRank(EPilotRank pilotRank)
 {
     PilotRank = pilotRank;
 }
