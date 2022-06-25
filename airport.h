@@ -11,7 +11,6 @@
 
 class Airport
 {
-
     std::string Iata; // IATA- 3 letter airport code (eg. London Heathrow- LHR)
     std::string Name;
     std::string City;
@@ -19,14 +18,14 @@ class Airport
     std::vector<GroundCrew> GroundCrews;
 
 public:
-    Airport(const std::string& iata, const std::string& name, const std::string& city);
+    Airport(std::string iata, std::string name, std::string city);
 
     const std::string& GetIata() const;
 
     void SetIata(const std::string& iata);
 
     const std::string& GetCity();
-	
+
     void SetCity(const std::string& city);
 
     const std::string& GetName();

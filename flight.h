@@ -15,7 +15,6 @@
 
 class Flight
 {
-
     int FlightNumber;
     std::string Src; // From
     std::string Dst; // To
@@ -26,7 +25,7 @@ class Flight
     Plane* ThePlane{};
 
 public:
-    Flight(int flightNumber, const std::string& src, const std::string& dst, Date dateDeparture, Airline* airline, Plane* plane);
+    Flight(int flightNumber, std::string src, std::string dst, Date dateDeparture, Airline* airline, Plane* plane);
 
     int GetFlightNumber() const;
 
@@ -34,13 +33,13 @@ public:
 
     void SetFlightNumber(int flightNumber);
 
-    const std::string GetSrc() const;
+    const std::string& GetSrc() const;
 
-    void SetSrc(const std::string src);
+    void SetSrc(const std::string& src);
 
-    const std::string GetDst() const;
+    const std::string& GetDst() const;
 
-    void SetDst(const std::string dst);
+    void SetDst(const std::string& dst);
 
     Date GetDateDeparture() const;
 
@@ -48,7 +47,7 @@ public:
 
     const std::vector<Passenger>& GetPassengers() const;
 
-    const std::vector<AirCrew>&  GetAirCrew() const;
+    const std::vector<AirCrew>& GetAirCrew() const;
 
     Plane* GetPlane() const;
 
@@ -56,7 +55,7 @@ public:
 
     const Flight& operator+=(const Passenger& passenger); // add passenger to flight
     const Flight& operator+=(const AirCrew& airCrew); // add air crew to flight
-    bool operator<(int capacity) const; // check if there are available seats
+    bool operator<(size_t capacity) const; // check if there are available seats
     bool operator==(const Flight& flight) const; // check if same flight
 
 

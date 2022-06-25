@@ -20,8 +20,6 @@ public:
 
     Employee(Person&& base, int employeeId, double salary, Date startDate, bool isAvailable);
 
-    Employee(const Employee& other);
-
     void SetSalary(double salary);
 
     void SetAvailability(bool availability);
@@ -35,5 +33,4 @@ public:
     bool GetAvailability() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Employee& employee);
-
 };

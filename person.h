@@ -19,7 +19,12 @@ protected:
     Date BirthDate;
 
 public:
-    Person(const std::string& firstName, const std::string& lastName, Date birthDate);
+    virtual ~Person() = default;
+    Person(const Person&) = default;
+    Person& operator=(const Person&) = delete;
+    Person& operator=(Person&&) = delete;
+    Person(Person&&) = default;
+    Person(std::string firstName, std::string lastName, Date birthDate);
 
     void SetFirstName(const std::string& firstName);
 
@@ -40,5 +45,4 @@ public:
     Date GetBirthDate() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Person& person);
-
 };

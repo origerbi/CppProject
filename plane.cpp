@@ -19,7 +19,7 @@ int Plane::GetMaxCapacity() const
     return MaxCapacity;
 }
 
-void Plane::SetMaxCapacity(const int maxCapacity)
+void Plane::SetMaxCapacity(int maxCapacity)
 {
     MaxCapacity = maxCapacity;
 }
@@ -29,7 +29,7 @@ Plane::EAircraft Plane::GetTheAircraft() const
     return TheAircraft;
 }
 
-void Plane::SetTheAircraft(const EAircraft theAircraft)
+void Plane::SetTheAircraft(EAircraft theAircraft)
 {
     TheAircraft = theAircraft;
 }

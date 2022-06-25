@@ -2,7 +2,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "person.h"
 
-Person::Person(const std::string& firstName, const std::string& lastName, const Date birthDate) : FirstName(firstName), LastName(lastName),
+Person::Person(std::string firstName, std::string lastName, const Date birthDate) : FirstName(std::move(firstName)), LastName(
+        std::move(lastName)),
     Id(Counter++), BirthDate(birthDate)
 {
 }
@@ -17,12 +18,12 @@ void Person::SetLastName(const std::string& lastName)
     LastName = lastName;
 }
 
-void Person::SetId(const int id)
+void Person::SetId(int id)
 {
     Id = id;
 }
 
-void Person::SetBirthDate(const int day, const int month, const int year)
+void Person::SetBirthDate(int day, int month, int year)
 {
     BirthDate = Date(day, month, year);
 }

@@ -8,7 +8,7 @@ GroundAttendant::GroundAttendant(Employee&& employee, GroundCrew&& groundCrew) :
 {
 }
 
-void GroundAttendant::SetFlightNumber(const int flightNumber)
+void GroundAttendant::SetFlightNumber(int flightNumber)
 {
     FlightNumber = flightNumber;
 }

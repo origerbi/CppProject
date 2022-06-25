@@ -12,7 +12,7 @@ protected:
     std::string AirportId;
 
 public:
-    explicit GroundCrew(const std::string& airportId);
+    explicit GroundCrew(std::string airportId);
 
     const std::string& GetAirportId() const;
 

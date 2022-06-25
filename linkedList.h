@@ -4,6 +4,8 @@
 template <typename T>
 class LinkedList
 {
+    LinkedList<T>* Next;
+    T* Value;
 public:
     explicit LinkedList<T>(const T& t);
     LinkedList<T>();
@@ -15,8 +17,8 @@ public:
     void AddItem(const T& t);
     bool RemoveItem(int index);
     bool HasNext() const;
-    LinkedList<T>* Next;
-    T* Value;
+    LinkedList<T>* GetNext() const;
+    T* GetValue() const;
     void Print();
 };
 
@@ -76,15 +78,27 @@ bool LinkedList<T>::HasNext() const
     return Next != nullptr;
 }
 
-template<typename T>
-inline void LinkedList<T>::Print()
+template <typename T>
+LinkedList<T>* LinkedList<T>::GetNext() const
 {
-	if (Value != nullptr)
-	{
-		std::cout << *Value << std::endl;
-	}
-	if (Next != nullptr)
-	{
-		Next->Print();
-	}
+    return Next;
+}
+
+template <typename T>
+T* LinkedList<T>::GetValue() const
+{
+    return Value;
+}
+
+template <typename T>
+void LinkedList<T>::Print()
+{
+    if (Value != nullptr)
+    {
+        std::cout << *Value << std::endl;
+    }
+    if (Next != nullptr)
+    {
+        Next->Print();
+    }
 }

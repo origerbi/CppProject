@@ -20,14 +20,14 @@ public:
 
     Passenger(const Passenger& other);
 
-    Passenger(Passenger&& other) noexcept = default;
+    ~Passenger() override;
 
-    ~Passenger();
+    Passenger(Passenger&& other) = default;
 
     Passenger& operator=(const Passenger& other) = delete;
 
     Passenger& operator=(Passenger&& other) noexcept = delete;
-	
+
     void SetFlightNumber(int flightNumber);
 
     void SetLuggage(const Luggage& luggage) const;

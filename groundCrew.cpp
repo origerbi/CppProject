@@ -1,6 +1,6 @@
 ﻿#include "groundCrew.h"
 
-GroundCrew::GroundCrew(const std::string& airportId) : AirportId(airportId)
+GroundCrew::GroundCrew(std::string airportId) : AirportId(std::move(airportId))
 {
 }
 

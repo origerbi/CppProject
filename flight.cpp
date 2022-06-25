@@ -1,7 +1,7 @@
 ﻿#include "flight.h"
 
-Flight::Flight(const int flightNumber, const std::string& src, const std::string& dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src(src),
-    Dst(dst), DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
+Flight::Flight(int flightNumber, std::string src, std::string dst, Date dateDeparture, Airline* airline, Plane* plane) : FlightNumber(flightNumber), Src(
+    std::move(src)), Dst(std::move(dst)), DateDeparture(dateDeparture), TheAirline(airline), ThePlane(plane)
 {
 }
 
@@ -16,27 +16,27 @@ Airline* Flight::GetAirline() const
     return TheAirline;
 }
 
-void Flight::SetFlightNumber(const int flightNumber)
+void Flight::SetFlightNumber(int flightNumber)
 {
     FlightNumber = flightNumber;
 }
 
-const std::string Flight::GetSrc() const
+const std::string& Flight::GetSrc() const
 {
     return Src;
 }
 
-void Flight::SetSrc(const std::string src)
+void Flight::SetSrc(const std::string& src)
 {
     Src = src;
 }
 
-const std::string Flight::GetDst() const
+const std::string& Flight::GetDst() const
 {
     return Dst;
 }
 
-void Flight::SetDst(const std::string dst)
+void Flight::SetDst(const std::string& dst)
 {
     Dst = dst;
 }
@@ -73,7 +73,7 @@ void Flight::SetPlane(Plane* plane)
 
 const Flight& Flight::operator+=(const Passenger& passenger)
 {
-	Passengers.push_back(passenger);
+    Passengers.push_back(passenger);
     return *this;
 }
 
@@ -83,7 +83,7 @@ const Flight& Flight::operator+=(const AirCrew& airCrew)
     return *this;
 }
 
-bool Flight::operator<(const int capacity) const
+bool Flight::operator<(size_t capacity) const
 {
     return Passengers.size() < capacity;
 }

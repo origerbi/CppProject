@@ -12,6 +12,11 @@ protected:
     int AirlineId;
 
 public:
+    virtual ~AirCrew() = default;
+    AirCrew& operator=(const AirCrew&) = delete;
+    AirCrew& operator=(AirCrew&&) = delete;
+    AirCrew(AirCrew&&) = default;
+    AirCrew(const AirCrew&) = default;
     explicit AirCrew(int airlineId);
 
     int GetAirlineId() const;

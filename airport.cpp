@@ -1,6 +1,7 @@
 ﻿#include "airport.h"
 
-Airport::Airport(const std::string& iata, const std::string& name, const std::string& city) : Iata(iata), Name(name), City(city)
+Airport::Airport(std::string iata, std::string name, std::string city) : Iata(std::move(iata)), Name(
+                                                                             std::move(name)), City(std::move(city))
 {
 }
 
@@ -57,7 +58,7 @@ Airport& Airport::operator+=(const Flight& flight)
 
 Airport& Airport::operator+=(const GroundCrew& crew)
 {
-	GroundCrews.push_back(crew);
+    GroundCrews.push_back(crew);
     return *this;
 }
 
@@ -67,11 +68,13 @@ std::ostream& operator<<(std::ostream& os, const Airport& airport)
     os << "Name: " << airport.Name << std::endl;
     os << "City: " << airport.City << std::endl;
     os << "Flights: " << std::endl;
-    for (Flight flight : airport.Flights) {
-		os << flight << std::endl;
+    for (const Flight& flight : airport.Flights)
+    {
+        os << flight << std::endl;
     }
     os << "Ground Crews: " << std::endl;
-    for (GroundCrew crew : airport.GroundCrews) {
+    for (const GroundCrew& crew : airport.GroundCrews)
+    {
         os << crew << std::endl;
     }
     return os;

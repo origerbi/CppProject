@@ -1,6 +1,6 @@
 ﻿#include "airportManager.h"
 
-AirportManager* AirportManager::instance = nullptr;
+AirportManager* AirportManager::Instance = nullptr;
 
 LinkedList<Airport>* AirportManager::GetAirports()
 {
@@ -33,10 +33,10 @@ Airport* AirportManager::FindAirportByCode(const std::string& code) const
     }
     do
     {
-        temp = temp->Next;
-        if (temp->Value->GetIata() == code)
+        temp = temp->GetNext();
+        if (temp->GetValue()->GetIata() == code)
         {
-            return temp->Value;
+            return temp->GetValue();
         }
     }
     while (temp->HasNext());
@@ -45,7 +45,8 @@ Airport* AirportManager::FindAirportByCode(const std::string& code) const
 
 Airline* AirportManager::FindAirline(const std::string& name)
 {
-	for (auto& airline : Airlines) {
+    for (auto& airline : Airlines)
+    {
         if (airline.GetName() == name)
         {
             return &airline;
@@ -60,7 +61,8 @@ void AirportManager::DisplayFilteredFlights(const std::string& src, const std::s
     if (srcAirport != nullptr)
     {
         const std::vector<Flight>& flights = srcAirport->GetFlights();
-		for (auto& flight : flights) {
+        for (const auto& flight : flights)
+        {
             if (flight.GetDst() == dest)
             {
                 std::cout << flight << std::endl;
@@ -82,7 +84,7 @@ bool AirportManager::RegisterFlight(const Flight& flight) const
     return false;
 }
 
-bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int flightNumber) const
+bool AirportManager::AddPassengerToFlight(const Passenger& passenger, int flightNumber) const
 {
     const LinkedList<Airport>* temp = &Airports;
     if (!temp->HasNext())
@@ -91,10 +93,11 @@ bool AirportManager::AddPassengerToFlight(const Passenger& passenger, const int 
     }
     do
     {
-        temp = temp->Next;
-        Airport* airport = temp->Value;
+        temp = temp->GetNext();
+        Airport* airport = temp->GetValue();
         std::vector<Flight>& flights = airport->GetFlights();
-		for (Flight& flight : flights) {
+        for (Flight& flight : flights)
+        {
             if (flight.GetFlightNumber() == flightNumber)
             {
                 flight += passenger;
@@ -117,7 +120,7 @@ bool AirportManager::AddEmployeeToAirport(const GroundAttendant& employee, const
     return true;
 }
 
-bool AirportManager::AddPilotToAirline(const Pilot& employee, const int id) const
+bool AirportManager::AddPilotToAirline(const Pilot& employee, int id) const
 {
     for (auto iterator = Airlines.begin(); iterator != Airlines.end(); ++iterator)
     {
@@ -143,7 +146,7 @@ bool AirportManager::AddFlightAttendantToAirline(const FlightAttendant& employee
     return false;
 }
 
-Flight* AirportManager::FindFlight(const int flightNumber) const
+Flight* AirportManager::FindFlight(int flightNumber) const
 {
     const LinkedList<Airport>* temp = &Airports;
     if (!temp->HasNext())
@@ -152,10 +155,11 @@ Flight* AirportManager::FindFlight(const int flightNumber) const
     }
     do
     {
-        temp = temp->Next;
-        Airport* airport = temp->Value;
+        temp = temp->GetNext();
+        Airport* airport = temp->GetValue();
         std::vector<Flight> flights = airport->GetFlights();
-		for (auto& flight : flights) {
+        for (auto& flight : flights)
+        {
             if (flight.GetFlightNumber() == flightNumber)
             {
                 return &flight;
@@ -168,9 +172,9 @@ Flight* AirportManager::FindFlight(const int flightNumber) const
 
 AirportManager* AirportManager::GetInstance()
 {
-	if (instance == nullptr)
-	{
-		instance = new AirportManager();
-	}
-    return instance;
+    if (Instance == nullptr)
+    {
+        Instance = new AirportManager();
+    }
+    return Instance;
 }

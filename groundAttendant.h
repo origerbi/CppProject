@@ -7,7 +7,7 @@
 #include "employee.h"
 #include "groundCrew.h"
 
-class GroundAttendant : public Employee, public GroundCrew
+class GroundAttendant final : public Employee, public GroundCrew
 {
     int FlightNumber;
 

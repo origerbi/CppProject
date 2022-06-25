@@ -1,10 +1,10 @@
 ﻿#include "passenger.h"
 
-Passenger::Passenger(const Person& base, const int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
+Passenger::Passenger(const Person& base, int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
 {
 }
 
-Passenger::Passenger(Person&& base, const int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
+Passenger::Passenger(Person&& base, int flightNumber, const Luggage& luggage) : Person(base), FlightNumber(flightNumber), PassengerLuggage(new Luggage(luggage))
 {
 }
 
@@ -18,7 +18,7 @@ Passenger::~Passenger()
     delete PassengerLuggage;
 }
 
-void Passenger::SetFlightNumber(const int flightNumber)
+void Passenger::SetFlightNumber(int flightNumber)
 {
     FlightNumber = flightNumber;
 }

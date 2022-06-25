@@ -2,7 +2,7 @@
 
 int Airline::Counter = 0;
 
-Airline::Airline(std::string& name) : Id(Counter++), Name(name)
+Airline::Airline(std::string name) : Id(Counter++), Name(std::move(name))
 {
 }
 
@@ -64,14 +64,14 @@ std::ostream& operator<<(std::ostream& os, Airline& airline)
         os << plane << std::endl;
     }
     os << "Pilots: " << std::endl;
-	for (const Pilot& pilot : airline.GetPilots())
-	{
-		os << pilot << std::endl;
-	}
+    for (const Pilot& pilot : airline.GetPilots())
+    {
+        os << pilot << std::endl;
+    }
     os << "Flight Attendants: " << std::endl;
-	for (const FlightAttendant& flightAttendant : airline.GetFlightAttendants())
-	{
-		os << flightAttendant << std::endl;
-	}
+    for (const FlightAttendant& flightAttendant : airline.GetFlightAttendants())
+    {
+        os << flightAttendant << std::endl;
+    }
     return os;
 }

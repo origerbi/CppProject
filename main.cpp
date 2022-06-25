@@ -1,8 +1,8 @@
 // ReSharper disable CppClangTidyModernizeAvoidCArrays
 #include "airportManager.h"
+#include "AddAirportCommand.h"
 #include "airport.h"
 #include "date.h"
-#include "AddAirportCommand.h"
 
 void AddAirline(AirportManager* pManager);
 
@@ -105,6 +105,8 @@ int main() // NOLINT(bugprone-exception-escape)
             cout << "Wrong option\n";
             break;
         }
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
     while (!ok);
 
@@ -124,7 +126,7 @@ void AddAirport(AirportManager* pManager)
     cout << "Enter airport's city\n";
     cin >> city;
     AddAirportCommand command(pManager, iata, name, city);
-	command.execute();
+    command.Execute();
 }
 
 void AddAirline(AirportManager* pManager)
@@ -185,24 +187,24 @@ void AddEmployeeAirport(AirportManager* pManager)
     }
 }
 
-Pilot* InitPilot(const Employee& employee, const int airlineId)
+Pilot InitPilot(const Employee& employee, int airlineId)
 {
     int rank;
     cout << "Choose pilots rank\n";
     cout << "0 - Captain\n1 - First Officer\n";
     cin >> rank;
 
-    return new Pilot(employee, AirCrew(airlineId), static_cast<Pilot::EPilotRank>(rank));
+    return {employee, AirCrew(airlineId), static_cast<Pilot::EPilotRank>(rank)};
 }
 
-FlightAttendant* InitFlightAttendant(const Employee& employee, const int airlineId)
+FlightAttendant InitFlightAttendant(const Employee& employee, int airlineId)
 {
     int rank;
     cout << "Choose Flight Attendant's rank\n";
     cout << "0 - Purser\n1 - Steward\n";
     cin >> rank;
 
-    return new FlightAttendant(employee, AirCrew(airlineId), static_cast<FlightAttendant::EFlightAttendantRank>(rank));
+    return {employee, AirCrew(airlineId), static_cast<FlightAttendant::EFlightAttendantRank>(rank)};
 }
 
 void AddEmployeeAirline(AirportManager* pManager)
@@ -221,8 +223,8 @@ void AddEmployeeAirline(AirportManager* pManager)
 
     if (choice == 1)
     {
-        const Pilot* pilot = InitPilot(employee, id);
-        if (pManager->AddPilotToAirline(*pilot, id))
+        const Pilot pilot = InitPilot(employee, id);
+        if (pManager->AddPilotToAirline(pilot, id))
         {
             cout << "Pilot added\n";
         }
@@ -230,12 +232,11 @@ void AddEmployeeAirline(AirportManager* pManager)
         {
             cout << "Pilot failed to add\n";
         }
-        delete pilot;
     }
     else
     {
-        const FlightAttendant* flightAttendant = InitFlightAttendant(employee, id);
-        if (pManager->AddFlightAttendantToAirline(*flightAttendant, id))
+        const FlightAttendant flightAttendant = InitFlightAttendant(employee, id);
+        if (pManager->AddFlightAttendantToAirline(flightAttendant, id))
         {
             cout << "Flight Attendant added successfully\n";
         }
@@ -243,7 +244,6 @@ void AddEmployeeAirline(AirportManager* pManager)
         {
             cout << "Flight Attendant failed to add\n";
         }
-        delete flightAttendant;
     }
 }
 
@@ -255,7 +255,7 @@ void RegisterFlight(AirportManager* pManager)
     DisplayAirlines(pManager);
     cin >> airlineName;
     Airline* airline = pManager->FindAirline(airlineName);
-    if (airline != nullptr && airline->GetPlanes().size() > 0)
+    if (airline != nullptr && !airline->GetPlanes().empty())
     {
         int month;
         int year;
@@ -273,11 +273,11 @@ void RegisterFlight(AirportManager* pManager)
         cin >> day >> month >> year;
         std::vector<Plane>& planes = airline->GetPlanes();
         cout << "Choose plane\n";
-        for (int i = 0; i < planes.size(); i++)
+        for (size_t i = 0; i < planes.size(); i++)
         {
             cout << i << " - " << planes[i] << endl;
         }
-        int planeId;
+        size_t planeId;
         cin >> planeId;
         Plane& plane = planes[planeId];
         const Flight flight(flightNumber, src, dest, Date(day, month, year), airline, &plane);
@@ -357,11 +357,11 @@ void DisplayFilteredFlights(const AirportManager* pManager)
 
 void DisplayFlights(AirportManager* pManager)
 {
-    LinkedList<Airport>* temp = pManager->GetAirports();
+    const LinkedList<Airport>* temp = pManager->GetAirports();
     do
     {
-        temp = temp->Next;
-        const std::vector<Flight>& flights = temp->Value->GetFlights();
+        temp = temp->GetNext();
+        const std::vector<Flight>& flights = temp->GetValue()->GetFlights();
         for (const Flight& f : flights)
         {
             cout << f << endl;
@@ -382,11 +382,11 @@ void AddPlaneToAirline(AirportManager* pManager)
 {
     std::vector<Airline>& airlines = pManager->GetAirlines();
     cout << "Choose airline:\n";
-    for (int i = 0; i < airlines.size(); i++)
+    for (size_t i = 0; i < airlines.size(); i++)
     {
         cout << i << " - " << airlines[i] << endl;
     }
-    int airlineId;
+    size_t airlineId;
     cin >> airlineId;
     try
     {
@@ -402,9 +402,8 @@ void AddPlaneToAirline(AirportManager* pManager)
     }
     catch (std::out_of_range&)
     {
-		cout << "Airline not found\n";
+        cout << "Airline not found\n";
     }
-
 }
 
 void AssemblePilots(Flight* flight)
@@ -412,12 +411,12 @@ void AssemblePilots(Flight* flight)
     int result;
     std::vector<Pilot>& pilots = flight->GetAirline()->GetPilots();
     const size_t numPilots = pilots.size();
-    auto* chosenNumbers = new int[static_cast<size_t>(numPilots)];
+    auto* chosenNumbers = new size_t[numPilots];
     int counter = 0;
     do
     {
         cout << "Choose pilots to assign, press -1 to continue\n";
-        for (int i = 0; i < numPilots; i++)
+        for (size_t i = 0; i < numPilots; i++)
         {
             if (pilots[i].GetAvailability())
             {
@@ -426,28 +425,28 @@ void AssemblePilots(Flight* flight)
         }
         cin >> result;
         bool found = false;
-        if (result < -1 || result >= numPilots)
+        if (result < -1 || static_cast<size_t>(result) >= numPilots)
         {
             cout << "Invalid input\n";
             continue;
         }
         for (int i = 0; i < counter; i++)
         {
-            if (result == chosenNumbers[i])
+            if (static_cast<size_t>(result) == chosenNumbers[i])
             {
                 found = true;
                 break;
             }
         }
-        if (!found && result != -1 && pilots[result].GetAvailability())
+        if (!found && result != -1 && pilots[static_cast<size_t>(result)].GetAvailability())
         {
-            pilots[result].SetAvailability(false);
+            pilots[static_cast<size_t>(result)].SetAvailability(false);
             counter++;
-            chosenNumbers[counter - 1] = result;
+            chosenNumbers[counter - 1] = static_cast<size_t>(result);
         }
         else if (result != -1)
         {
-            cout << "This pilot already been added or is not avaliable\n";
+            cout << "This pilot already been added or is not available\n";
         }
     }
     while (result != -1);
@@ -462,12 +461,12 @@ void AssembleFlightAttendants(Flight* flight)
 {
     int result;
     std::vector<FlightAttendant>& flightAttendants = flight->GetAirline()->GetFlightAttendants();
-    auto* chosenNumbers = new int[flightAttendants.size()];
+    auto* chosenNumbers = new size_t[flightAttendants.size()];
     int counter = 0;
     do
     {
         cout << "Choose flight attendants to assign, press -1 to continue\n";
-        for (int i = 0; i < flightAttendants.size(); i++)
+        for (size_t i = 0; i < flightAttendants.size(); i++)
         {
             if (flightAttendants[i].GetAvailability())
             {
@@ -476,24 +475,24 @@ void AssembleFlightAttendants(Flight* flight)
         }
         cin >> result;
         bool found = false;
-        if (result < -1 || result >= flightAttendants.size())
+        if (result < -1 || static_cast<size_t>(result) >= flightAttendants.size())
         {
             cout << "Invalid input\n";
             continue;
         }
         for (int i = 0; i < counter; i++)
         {
-            if (result == chosenNumbers[i])
+            if (static_cast<size_t>(result) == chosenNumbers[i])
             {
                 found = true;
                 break;
             }
         }
-        if (!found && result != -1 && flightAttendants[result].GetAvailability())
+        if (!found && result != -1 && flightAttendants[static_cast<size_t>(result)].GetAvailability())
         {
-            flightAttendants[result].SetAvailability(false);
+            flightAttendants[static_cast<size_t>(result)].SetAvailability(false);
             counter++;
-            chosenNumbers[counter - 1] = result;
+            chosenNumbers[counter - 1] = static_cast<size_t>(result);
         }
         else if (result != -1)
         {

@@ -22,7 +22,7 @@ class Airline
     std::vector<FlightAttendant> FlightAttendants;
 
 public:
-    explicit Airline(std::string& name);
+    explicit Airline(std::string name);
 
     int GetId() const;
 

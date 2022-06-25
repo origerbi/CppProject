@@ -7,7 +7,7 @@
 #include "airCrew.h"
 #include "employee.h"
 
-class FlightAttendant : public Employee, public AirCrew
+class FlightAttendant final : public Employee, public AirCrew
 {
 public:
     enum class EFlightAttendantRank
